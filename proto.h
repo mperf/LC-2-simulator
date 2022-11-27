@@ -1,0 +1,1 @@
+int firstcheck(char *line);
