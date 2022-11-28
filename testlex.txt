@@ -1,3 +1,11 @@
+b10101011
+b1211111
+b0000000000111111
+B0010101010101011
+"questa è una stringa"
+"questa not
+"string"
+aa"
 ADD
 LD
 ST
