@@ -1030,7 +1030,7 @@ return EOF;
 case 30:
 YY_RULE_SETUP
 #line 47 "lexer.l"
-printf("%s no \n",yytext);
+;
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
@@ -2056,3 +2056,4 @@ void yyfree (void * ptr )
 
 int yywrap (void) {return 1;}
 //short int per ca2 registri
+//sistemare limite minimo di bit per BINARY

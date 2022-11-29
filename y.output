@@ -9,101 +9,135 @@ Grammar
 
     1 program: orig lines end
 
-    2 end: END EOF
+    2 end: endb EOF
 
-    3 orig: ORIG ADDR
+    3 endb: END
 
-    4 lines: code
-    5      | lines code
+    4 @1: /* empty */
 
-    6 code: ldst
-    7     | imop
-    8     | bsop
-    9     | ret
-   10     | jump
-   11     | directive
-   12     | jsr
-   13     | not
-   14     | trap
+    5 orig: ORIG @1 ADDR
 
-   15 imop: LABEL IMOP REGISTER COMMA REGISTER COMMA REGISTER
-   16     | LABEL IMOP REGISTER COMMA REGISTER COMMA NUMBERS
-   17     | LABEL IMOP REGISTER COMMA REGISTER COMMA BINARY
-   18     | LABEL IMOP REGISTER COMMA REGISTER COMMA ADDR
-   19     | IMOP REGISTER COMMA REGISTER COMMA REGISTER
-   20     | IMOP REGISTER COMMA REGISTER COMMA NUMBERS
-   21     | IMOP REGISTER COMMA REGISTER COMMA BINARY
-   22     | IMOP REGISTER COMMA REGISTER COMMA ADDR
+    6 lines: code
+    7      | lines code
 
-   23 bsop: LABEL BSOP REGISTER COMMA REGISTER COMMA NUMBERS
-   24     | BSOP REGISTER COMMA REGISTER COMMA NUMBERS
+    8 code: ldst
+    9     | imop
+   10     | bsop
+   11     | ret
+   12     | jump
+   13     | directive
+   14     | jsr
+   15     | not
+   16     | trap
+   17     | codeb ldst
+   18     | codeb imop
+   19     | codeb bsop
+   20     | codeb ret
+   21     | codeb jump
+   22     | codeb directive
+   23     | codeb jsr
+   24     | codeb not
+   25     | codeb trap
 
-   25 ldst: LABEL LDST REGISTER COMMA ADDR
-   26     | LDST REGISTER COMMA ADDR
-   27     | LABEL LDST REGISTER COMMA LABEL
-   28     | LDST REGISTER COMMA LABEL
+   26 codeb: LABEL
 
-   29 not: LABEL NOT REGISTER COMMA REGISTER
-   30    | NOT REGISTER COMMA REGISTER
+   27 imop: imopb COMMA REGISTER
+   28     | imopb COMMA NUMBERS
+   29     | imopb COMMA BINARY
+   30     | imopb COMMA ADDR
 
-   31 jump: LABEL JUMP ADDR
-   32     | LABEL JUMP LABEL
-   33     | JUMP ADDR
-   34     | JUMP LABEL
+   31 @2: /* empty */
 
-   35 directive: LABEL FILL ADDR
-   36          | LABEL FILL NUM
-   37          | LABEL FILL BINARY
-   38          | LABEL FILL LABEL
-   39          | LABEL BLKW NUM
-   40          | LABEL STRINGZ STR
-   41          | FILL ADDR
-   42          | FILL NUM
-   43          | FILL BINARY
-   44          | BLKW NUM
-   45          | STRINGZ STR
+   32 @3: /* empty */
 
-   46 trap: LABEL TRAP ADDR
-   47     | TRAP ADDR
+   33 imopb: IMOP @2 REGISTER @3 COMMA REGISTER
 
-   48 ret: LABEL RETS
-   49    | RETS
+   34 @4: /* empty */
 
-   50 jsr: LABEL JSR LABEL
-   51    | LABEL JSRR REGISTER COMMA ADDR
-   52    | JSR LABEL
-   53    | JSRR REGISTER COMMA ADDR
+   35 @5: /* empty */
+
+   36 @6: /* empty */
+
+   37 bsop: BSOP @4 REGISTER @5 COMMA REGISTER @6 COMMA NUMBERS
+
+   38 ldst: ldstb COMMA ADDR
+   39     | ldstb COMMA LABEL
+
+   40 @7: /* empty */
+
+   41 ldstb: LDST @7 REGISTER
+
+   42 @8: /* empty */
+
+   43 @9: /* empty */
+
+   44 not: NOT @8 REGISTER @9 COMMA REGISTER
+
+   45 jump: jumpb ADDR
+   46     | jumpb LABEL
+
+   47 jumpb: JUMP
+
+   48 directive: dirb ADDR
+   49          | dirb NUM
+   50          | dirb BINARY
+   51          | dirb LABEL
+
+   52 @10: /* empty */
+
+   53 directive: BLKW @10 NUM
+
+   54 @11: /* empty */
+
+   55 directive: STRINGZ @11 STR
+
+   56 dirb: FILL
+
+   57 @12: /* empty */
+
+   58 trap: TRAP @12 ADDR
+
+   59 ret: RETS
+
+   60 @13: /* empty */
+
+   61 jsr: JSR @13 LABEL
+
+   62 @14: /* empty */
+
+   63 @15: /* empty */
+
+   64 jsr: JSRR @14 REGISTER @15 COMMA ADDR
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
 error (256)
-REGISTER (258) 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 51 53
-RETS (259) 48 49
+REGISTER (258) 27 33 37 41 44 64
+RETS (259) 59
 EOF (260) 2
-LDST (261) 25 26 27 28
-NOT (262) 29 30
-LABEL (263) 15 16 17 18 23 25 27 28 29 31 32 34 35 36 37 38 39 40 46
-    48 50 51 52
-NUMBERS (264) 16 20 23 24
-ORIG (265) 3
+LDST (261) 41
+NOT (262) 44
+LABEL (263) 26 39 46 51 61
+NUMBERS (264) 28 37
+ORIG (265) 5
 COMMENT (266)
-JUMP (267) 31 32 33 34
-COMMA (268) 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 51 53
-ADDR (269) 3 18 22 25 26 31 33 35 41 46 47 51 53
-END (270) 2
-BLKW (271) 39 44
-STRINGZ (272) 40 45
-BINARY (273) 17 21 37 43
-NUM (274) 36 39 42 44
-FILL (275) 35 36 37 38 41 42 43
-STR (276) 40 45
-JSR (277) 50 52
-JSRR (278) 51 53
-IMOP (279) 15 16 17 18 19 20 21 22
-BSOP (280) 23 24
-TRAP (281) 46 47
+JUMP (267) 47
+COMMA (268) 27 28 29 30 33 37 38 39 44 64
+ADDR (269) 5 30 38 45 48 58 64
+END (270) 3
+BLKW (271) 53
+STRINGZ (272) 55
+BINARY (273) 29 50
+NUM (274) 49 53
+FILL (275) 56
+STR (276) 55
+JSR (277) 61
+JSRR (278) 64
+IMOP (279) 33
+BSOP (280) 37
+TRAP (281) 58
 
 
 Nonterminals, with rules where they appear
@@ -114,30 +148,73 @@ program (28)
     on left: 1, on right: 0
 end (29)
     on left: 2, on right: 1
-orig (30)
-    on left: 3, on right: 1
-lines (31)
-    on left: 4 5, on right: 1 5
-code (32)
-    on left: 6 7 8 9 10 11 12 13 14, on right: 4 5
-imop (33)
-    on left: 15 16 17 18 19 20 21 22, on right: 7
-bsop (34)
-    on left: 23 24, on right: 8
-ldst (35)
-    on left: 25 26 27 28, on right: 6
-not (36)
-    on left: 29 30, on right: 13
-jump (37)
-    on left: 31 32 33 34, on right: 10
-directive (38)
-    on left: 35 36 37 38 39 40 41 42 43 44 45, on right: 11
-trap (39)
-    on left: 46 47, on right: 14
-ret (40)
-    on left: 48 49, on right: 9
-jsr (41)
-    on left: 50 51 52 53, on right: 12
+endb (30)
+    on left: 3, on right: 2
+orig (31)
+    on left: 5, on right: 1
+@1 (32)
+    on left: 4, on right: 5
+lines (33)
+    on left: 6 7, on right: 1 7
+code (34)
+    on left: 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25,
+    on right: 6 7
+codeb (35)
+    on left: 26, on right: 17 18 19 20 21 22 23 24 25
+imop (36)
+    on left: 27 28 29 30, on right: 9 18
+imopb (37)
+    on left: 33, on right: 27 28 29 30
+@2 (38)
+    on left: 31, on right: 33
+@3 (39)
+    on left: 32, on right: 33
+bsop (40)
+    on left: 37, on right: 10 19
+@4 (41)
+    on left: 34, on right: 37
+@5 (42)
+    on left: 35, on right: 37
+@6 (43)
+    on left: 36, on right: 37
+ldst (44)
+    on left: 38 39, on right: 8 17
+ldstb (45)
+    on left: 41, on right: 38 39
+@7 (46)
+    on left: 40, on right: 41
+not (47)
+    on left: 44, on right: 15 24
+@8 (48)
+    on left: 42, on right: 44
+@9 (49)
+    on left: 43, on right: 44
+jump (50)
+    on left: 45 46, on right: 12 21
+jumpb (51)
+    on left: 47, on right: 45 46
+directive (52)
+    on left: 48 49 50 51 53 55, on right: 13 22
+@10 (53)
+    on left: 52, on right: 53
+@11 (54)
+    on left: 54, on right: 55
+dirb (55)
+    on left: 56, on right: 48 49 50 51
+trap (56)
+    on left: 58, on right: 16 25
+@12 (57)
+    on left: 57, on right: 58
+ret (58)
+    on left: 59, on right: 11 20
+jsr (59)
+    on left: 61 64, on right: 14 23
+@13 (60)
+    on left: 60, on right: 61
+@14 (61)
+    on left: 62, on right: 64
+@15 (62)
+    on left: 63, on right: 64
 
 
 state 0
@@ -152,9 +229,11 @@ state 0
 
 state 1
 
-    3 orig: ORIG . ADDR
+    5 orig: ORIG . @1 ADDR
 
-    ADDR  shift, and go to state 4
+    $default  reduce using rule 4 (@1)
+
+    @1  go to state 4
 
 
 state 2
@@ -184,22 +263,27 @@ state 3
 
     lines      go to state 19
     code       go to state 20
-    imop       go to state 21
-    bsop       go to state 22
-    ldst       go to state 23
-    not        go to state 24
-    jump       go to state 25
-    directive  go to state 26
-    trap       go to state 27
-    ret        go to state 28
-    jsr        go to state 29
+    codeb      go to state 21
+    imop       go to state 22
+    imopb      go to state 23
+    bsop       go to state 24
+    ldst       go to state 25
+    ldstb      go to state 26
+    not        go to state 27
+    jump       go to state 28
+    jumpb      go to state 29
+    directive  go to state 30
+    dirb       go to state 31
+    trap       go to state 32
+    ret        go to state 33
+    jsr        go to state 34
 
 
 state 4
 
-    3 orig: ORIG ADDR .
+    5 orig: ORIG @1 . ADDR
 
-    $default  reduce using rule 3 (orig)
+    ADDR  shift, and go to state 35
 
 
 state 5
@@ -211,146 +295,124 @@ state 5
 
 state 6
 
-   49 ret: RETS .
+   59 ret: RETS .
 
-    $default  reduce using rule 49 (ret)
+    $default  reduce using rule 59 (ret)
 
 
 state 7
 
-   26 ldst: LDST . REGISTER COMMA ADDR
-   28     | LDST . REGISTER COMMA LABEL
+   41 ldstb: LDST . @7 REGISTER
 
-    REGISTER  shift, and go to state 30
+    $default  reduce using rule 40 (@7)
+
+    @7  go to state 36
 
 
 state 8
 
-   30 not: NOT . REGISTER COMMA REGISTER
+   44 not: NOT . @8 REGISTER @9 COMMA REGISTER
 
-    REGISTER  shift, and go to state 31
+    $default  reduce using rule 42 (@8)
+
+    @8  go to state 37
 
 
 state 9
 
-   15 imop: LABEL . IMOP REGISTER COMMA REGISTER COMMA REGISTER
-   16     | LABEL . IMOP REGISTER COMMA REGISTER COMMA NUMBERS
-   17     | LABEL . IMOP REGISTER COMMA REGISTER COMMA BINARY
-   18     | LABEL . IMOP REGISTER COMMA REGISTER COMMA ADDR
-   23 bsop: LABEL . BSOP REGISTER COMMA REGISTER COMMA NUMBERS
-   25 ldst: LABEL . LDST REGISTER COMMA ADDR
-   27     | LABEL . LDST REGISTER COMMA LABEL
-   29 not: LABEL . NOT REGISTER COMMA REGISTER
-   31 jump: LABEL . JUMP ADDR
-   32     | LABEL . JUMP LABEL
-   35 directive: LABEL . FILL ADDR
-   36          | LABEL . FILL NUM
-   37          | LABEL . FILL BINARY
-   38          | LABEL . FILL LABEL
-   39          | LABEL . BLKW NUM
-   40          | LABEL . STRINGZ STR
-   46 trap: LABEL . TRAP ADDR
-   48 ret: LABEL . RETS
-   50 jsr: LABEL . JSR LABEL
-   51    | LABEL . JSRR REGISTER COMMA ADDR
+   26 codeb: LABEL .
 
-    RETS     shift, and go to state 32
-    LDST     shift, and go to state 33
-    NOT      shift, and go to state 34
-    JUMP     shift, and go to state 35
-    BLKW     shift, and go to state 36
-    STRINGZ  shift, and go to state 37
-    FILL     shift, and go to state 38
-    JSR      shift, and go to state 39
-    JSRR     shift, and go to state 40
-    IMOP     shift, and go to state 41
-    BSOP     shift, and go to state 42
-    TRAP     shift, and go to state 43
+    $default  reduce using rule 26 (codeb)
 
 
 state 10
 
-   33 jump: JUMP . ADDR
-   34     | JUMP . LABEL
+   47 jumpb: JUMP .
 
-    LABEL  shift, and go to state 44
-    ADDR   shift, and go to state 45
+    $default  reduce using rule 47 (jumpb)
 
 
 state 11
 
-   44 directive: BLKW . NUM
+   53 directive: BLKW . @10 NUM
 
-    NUM  shift, and go to state 46
+    $default  reduce using rule 52 (@10)
+
+    @10  go to state 38
 
 
 state 12
 
-   45 directive: STRINGZ . STR
+   55 directive: STRINGZ . @11 STR
 
-    STR  shift, and go to state 47
+    $default  reduce using rule 54 (@11)
+
+    @11  go to state 39
 
 
 state 13
 
-   41 directive: FILL . ADDR
-   42          | FILL . NUM
-   43          | FILL . BINARY
+   56 dirb: FILL .
 
-    ADDR    shift, and go to state 48
-    BINARY  shift, and go to state 49
-    NUM     shift, and go to state 50
+    $default  reduce using rule 56 (dirb)
 
 
 state 14
 
-   52 jsr: JSR . LABEL
+   61 jsr: JSR . @13 LABEL
 
-    LABEL  shift, and go to state 51
+    $default  reduce using rule 60 (@13)
+
+    @13  go to state 40
 
 
 state 15
 
-   53 jsr: JSRR . REGISTER COMMA ADDR
+   64 jsr: JSRR . @14 REGISTER @15 COMMA ADDR
 
-    REGISTER  shift, and go to state 52
+    $default  reduce using rule 62 (@14)
+
+    @14  go to state 41
 
 
 state 16
 
-   19 imop: IMOP . REGISTER COMMA REGISTER COMMA REGISTER
-   20     | IMOP . REGISTER COMMA REGISTER COMMA NUMBERS
-   21     | IMOP . REGISTER COMMA REGISTER COMMA BINARY
-   22     | IMOP . REGISTER COMMA REGISTER COMMA ADDR
+   33 imopb: IMOP . @2 REGISTER @3 COMMA REGISTER
 
-    REGISTER  shift, and go to state 53
+    $default  reduce using rule 31 (@2)
+
+    @2  go to state 42
 
 
 state 17
 
-   24 bsop: BSOP . REGISTER COMMA REGISTER COMMA NUMBERS
+   37 bsop: BSOP . @4 REGISTER @5 COMMA REGISTER @6 COMMA NUMBERS
 
-    REGISTER  shift, and go to state 54
+    $default  reduce using rule 34 (@4)
+
+    @4  go to state 43
 
 
 state 18
 
-   47 trap: TRAP . ADDR
+   58 trap: TRAP . @12 ADDR
 
-    ADDR  shift, and go to state 55
+    $default  reduce using rule 57 (@12)
+
+    @12  go to state 44
 
 
 state 19
 
     1 program: orig lines . end
-    5 lines: lines . code
+    7 lines: lines . code
 
     RETS     shift, and go to state 6
     LDST     shift, and go to state 7
     NOT      shift, and go to state 8
     LABEL    shift, and go to state 9
     JUMP     shift, and go to state 10
-    END      shift, and go to state 56
+    END      shift, and go to state 45
     BLKW     shift, and go to state 11
     STRINGZ  shift, and go to state 12
     FILL     shift, and go to state 13
@@ -360,312 +422,353 @@ state 19
     BSOP     shift, and go to state 17
     TRAP     shift, and go to state 18
 
-    end        go to state 57
-    code       go to state 58
-    imop       go to state 21
-    bsop       go to state 22
-    ldst       go to state 23
-    not        go to state 24
-    jump       go to state 25
-    directive  go to state 26
-    trap       go to state 27
-    ret        go to state 28
-    jsr        go to state 29
+    end        go to state 46
+    endb       go to state 47
+    code       go to state 48
+    codeb      go to state 21
+    imop       go to state 22
+    imopb      go to state 23
+    bsop       go to state 24
+    ldst       go to state 25
+    ldstb      go to state 26
+    not        go to state 27
+    jump       go to state 28
+    jumpb      go to state 29
+    directive  go to state 30
+    dirb       go to state 31
+    trap       go to state 32
+    ret        go to state 33
+    jsr        go to state 34
 
 
 state 20
 
-    4 lines: code .
+    6 lines: code .
 
-    $default  reduce using rule 4 (lines)
+    $default  reduce using rule 6 (lines)
 
 
 state 21
 
-    7 code: imop .
+   17 code: codeb . ldst
+   18     | codeb . imop
+   19     | codeb . bsop
+   20     | codeb . ret
+   21     | codeb . jump
+   22     | codeb . directive
+   23     | codeb . jsr
+   24     | codeb . not
+   25     | codeb . trap
 
-    $default  reduce using rule 7 (code)
+    RETS     shift, and go to state 6
+    LDST     shift, and go to state 7
+    NOT      shift, and go to state 8
+    JUMP     shift, and go to state 10
+    BLKW     shift, and go to state 11
+    STRINGZ  shift, and go to state 12
+    FILL     shift, and go to state 13
+    JSR      shift, and go to state 14
+    JSRR     shift, and go to state 15
+    IMOP     shift, and go to state 16
+    BSOP     shift, and go to state 17
+    TRAP     shift, and go to state 18
+
+    imop       go to state 49
+    imopb      go to state 23
+    bsop       go to state 50
+    ldst       go to state 51
+    ldstb      go to state 26
+    not        go to state 52
+    jump       go to state 53
+    jumpb      go to state 29
+    directive  go to state 54
+    dirb       go to state 31
+    trap       go to state 55
+    ret        go to state 56
+    jsr        go to state 57
 
 
 state 22
 
-    8 code: bsop .
-
-    $default  reduce using rule 8 (code)
-
-
-state 23
-
-    6 code: ldst .
-
-    $default  reduce using rule 6 (code)
-
-
-state 24
-
-   13 code: not .
-
-    $default  reduce using rule 13 (code)
-
-
-state 25
-
-   10 code: jump .
-
-    $default  reduce using rule 10 (code)
-
-
-state 26
-
-   11 code: directive .
-
-    $default  reduce using rule 11 (code)
-
-
-state 27
-
-   14 code: trap .
-
-    $default  reduce using rule 14 (code)
-
-
-state 28
-
-    9 code: ret .
+    9 code: imop .
 
     $default  reduce using rule 9 (code)
 
 
-state 29
+state 23
 
-   12 code: jsr .
+   27 imop: imopb . COMMA REGISTER
+   28     | imopb . COMMA NUMBERS
+   29     | imopb . COMMA BINARY
+   30     | imopb . COMMA ADDR
 
-    $default  reduce using rule 12 (code)
+    COMMA  shift, and go to state 58
 
 
-state 30
+state 24
 
-   26 ldst: LDST REGISTER . COMMA ADDR
-   28     | LDST REGISTER . COMMA LABEL
+   10 code: bsop .
+
+    $default  reduce using rule 10 (code)
+
+
+state 25
+
+    8 code: ldst .
+
+    $default  reduce using rule 8 (code)
+
+
+state 26
+
+   38 ldst: ldstb . COMMA ADDR
+   39     | ldstb . COMMA LABEL
 
     COMMA  shift, and go to state 59
 
 
+state 27
+
+   15 code: not .
+
+    $default  reduce using rule 15 (code)
+
+
+state 28
+
+   12 code: jump .
+
+    $default  reduce using rule 12 (code)
+
+
+state 29
+
+   45 jump: jumpb . ADDR
+   46     | jumpb . LABEL
+
+    LABEL  shift, and go to state 60
+    ADDR   shift, and go to state 61
+
+
+state 30
+
+   13 code: directive .
+
+    $default  reduce using rule 13 (code)
+
+
 state 31
 
-   30 not: NOT REGISTER . COMMA REGISTER
+   48 directive: dirb . ADDR
+   49          | dirb . NUM
+   50          | dirb . BINARY
+   51          | dirb . LABEL
 
-    COMMA  shift, and go to state 60
+    LABEL   shift, and go to state 62
+    ADDR    shift, and go to state 63
+    BINARY  shift, and go to state 64
+    NUM     shift, and go to state 65
 
 
 state 32
 
-   48 ret: LABEL RETS .
+   16 code: trap .
 
-    $default  reduce using rule 48 (ret)
+    $default  reduce using rule 16 (code)
 
 
 state 33
 
-   25 ldst: LABEL LDST . REGISTER COMMA ADDR
-   27     | LABEL LDST . REGISTER COMMA LABEL
+   11 code: ret .
 
-    REGISTER  shift, and go to state 61
+    $default  reduce using rule 11 (code)
 
 
 state 34
 
-   29 not: LABEL NOT . REGISTER COMMA REGISTER
+   14 code: jsr .
 
-    REGISTER  shift, and go to state 62
+    $default  reduce using rule 14 (code)
 
 
 state 35
 
-   31 jump: LABEL JUMP . ADDR
-   32     | LABEL JUMP . LABEL
+    5 orig: ORIG @1 ADDR .
 
-    LABEL  shift, and go to state 63
-    ADDR   shift, and go to state 64
+    $default  reduce using rule 5 (orig)
 
 
 state 36
 
-   39 directive: LABEL BLKW . NUM
+   41 ldstb: LDST @7 . REGISTER
 
-    NUM  shift, and go to state 65
+    REGISTER  shift, and go to state 66
 
 
 state 37
 
-   40 directive: LABEL STRINGZ . STR
+   44 not: NOT @8 . REGISTER @9 COMMA REGISTER
 
-    STR  shift, and go to state 66
+    REGISTER  shift, and go to state 67
 
 
 state 38
 
-   35 directive: LABEL FILL . ADDR
-   36          | LABEL FILL . NUM
-   37          | LABEL FILL . BINARY
-   38          | LABEL FILL . LABEL
+   53 directive: BLKW @10 . NUM
 
-    LABEL   shift, and go to state 67
-    ADDR    shift, and go to state 68
-    BINARY  shift, and go to state 69
-    NUM     shift, and go to state 70
+    NUM  shift, and go to state 68
 
 
 state 39
 
-   50 jsr: LABEL JSR . LABEL
+   55 directive: STRINGZ @11 . STR
 
-    LABEL  shift, and go to state 71
+    STR  shift, and go to state 69
 
 
 state 40
 
-   51 jsr: LABEL JSRR . REGISTER COMMA ADDR
+   61 jsr: JSR @13 . LABEL
 
-    REGISTER  shift, and go to state 72
+    LABEL  shift, and go to state 70
 
 
 state 41
 
-   15 imop: LABEL IMOP . REGISTER COMMA REGISTER COMMA REGISTER
-   16     | LABEL IMOP . REGISTER COMMA REGISTER COMMA NUMBERS
-   17     | LABEL IMOP . REGISTER COMMA REGISTER COMMA BINARY
-   18     | LABEL IMOP . REGISTER COMMA REGISTER COMMA ADDR
+   64 jsr: JSRR @14 . REGISTER @15 COMMA ADDR
 
-    REGISTER  shift, and go to state 73
+    REGISTER  shift, and go to state 71
 
 
 state 42
 
-   23 bsop: LABEL BSOP . REGISTER COMMA REGISTER COMMA NUMBERS
+   33 imopb: IMOP @2 . REGISTER @3 COMMA REGISTER
 
-    REGISTER  shift, and go to state 74
+    REGISTER  shift, and go to state 72
 
 
 state 43
 
-   46 trap: LABEL TRAP . ADDR
+   37 bsop: BSOP @4 . REGISTER @5 COMMA REGISTER @6 COMMA NUMBERS
 
-    ADDR  shift, and go to state 75
+    REGISTER  shift, and go to state 73
 
 
 state 44
 
-   34 jump: JUMP LABEL .
+   58 trap: TRAP @12 . ADDR
 
-    $default  reduce using rule 34 (jump)
+    ADDR  shift, and go to state 74
 
 
 state 45
 
-   33 jump: JUMP ADDR .
+    3 endb: END .
 
-    $default  reduce using rule 33 (jump)
+    $default  reduce using rule 3 (endb)
 
 
 state 46
-
-   44 directive: BLKW NUM .
-
-    $default  reduce using rule 44 (directive)
-
-
-state 47
-
-   45 directive: STRINGZ STR .
-
-    $default  reduce using rule 45 (directive)
-
-
-state 48
-
-   41 directive: FILL ADDR .
-
-    $default  reduce using rule 41 (directive)
-
-
-state 49
-
-   43 directive: FILL BINARY .
-
-    $default  reduce using rule 43 (directive)
-
-
-state 50
-
-   42 directive: FILL NUM .
-
-    $default  reduce using rule 42 (directive)
-
-
-state 51
-
-   52 jsr: JSR LABEL .
-
-    $default  reduce using rule 52 (jsr)
-
-
-state 52
-
-   53 jsr: JSRR REGISTER . COMMA ADDR
-
-    COMMA  shift, and go to state 76
-
-
-state 53
-
-   19 imop: IMOP REGISTER . COMMA REGISTER COMMA REGISTER
-   20     | IMOP REGISTER . COMMA REGISTER COMMA NUMBERS
-   21     | IMOP REGISTER . COMMA REGISTER COMMA BINARY
-   22     | IMOP REGISTER . COMMA REGISTER COMMA ADDR
-
-    COMMA  shift, and go to state 77
-
-
-state 54
-
-   24 bsop: BSOP REGISTER . COMMA REGISTER COMMA NUMBERS
-
-    COMMA  shift, and go to state 78
-
-
-state 55
-
-   47 trap: TRAP ADDR .
-
-    $default  reduce using rule 47 (trap)
-
-
-state 56
-
-    2 end: END . EOF
-
-    EOF  shift, and go to state 79
-
-
-state 57
 
     1 program: orig lines end .
 
     $default  reduce using rule 1 (program)
 
 
+state 47
+
+    2 end: endb . EOF
+
+    EOF  shift, and go to state 75
+
+
+state 48
+
+    7 lines: lines code .
+
+    $default  reduce using rule 7 (lines)
+
+
+state 49
+
+   18 code: codeb imop .
+
+    $default  reduce using rule 18 (code)
+
+
+state 50
+
+   19 code: codeb bsop .
+
+    $default  reduce using rule 19 (code)
+
+
+state 51
+
+   17 code: codeb ldst .
+
+    $default  reduce using rule 17 (code)
+
+
+state 52
+
+   24 code: codeb not .
+
+    $default  reduce using rule 24 (code)
+
+
+state 53
+
+   21 code: codeb jump .
+
+    $default  reduce using rule 21 (code)
+
+
+state 54
+
+   22 code: codeb directive .
+
+    $default  reduce using rule 22 (code)
+
+
+state 55
+
+   25 code: codeb trap .
+
+    $default  reduce using rule 25 (code)
+
+
+state 56
+
+   20 code: codeb ret .
+
+    $default  reduce using rule 20 (code)
+
+
+state 57
+
+   23 code: codeb jsr .
+
+    $default  reduce using rule 23 (code)
+
+
 state 58
 
-    5 lines: lines code .
+   27 imop: imopb COMMA . REGISTER
+   28     | imopb COMMA . NUMBERS
+   29     | imopb COMMA . BINARY
+   30     | imopb COMMA . ADDR
 
-    $default  reduce using rule 5 (lines)
+    REGISTER  shift, and go to state 76
+    NUMBERS   shift, and go to state 77
+    ADDR      shift, and go to state 78
+    BINARY    shift, and go to state 79
 
 
 state 59
 
-   26 ldst: LDST REGISTER COMMA . ADDR
-   28     | LDST REGISTER COMMA . LABEL
+   38 ldst: ldstb COMMA . ADDR
+   39     | ldstb COMMA . LABEL
 
     LABEL  shift, and go to state 80
     ADDR   shift, and go to state 81
@@ -673,386 +776,268 @@ state 59
 
 state 60
 
-   30 not: NOT REGISTER COMMA . REGISTER
+   46 jump: jumpb LABEL .
 
-    REGISTER  shift, and go to state 82
+    $default  reduce using rule 46 (jump)
 
 
 state 61
 
-   25 ldst: LABEL LDST REGISTER . COMMA ADDR
-   27     | LABEL LDST REGISTER . COMMA LABEL
+   45 jump: jumpb ADDR .
 
-    COMMA  shift, and go to state 83
+    $default  reduce using rule 45 (jump)
 
 
 state 62
 
-   29 not: LABEL NOT REGISTER . COMMA REGISTER
+   51 directive: dirb LABEL .
 
-    COMMA  shift, and go to state 84
+    $default  reduce using rule 51 (directive)
 
 
 state 63
 
-   32 jump: LABEL JUMP LABEL .
+   48 directive: dirb ADDR .
 
-    $default  reduce using rule 32 (jump)
+    $default  reduce using rule 48 (directive)
 
 
 state 64
 
-   31 jump: LABEL JUMP ADDR .
+   50 directive: dirb BINARY .
 
-    $default  reduce using rule 31 (jump)
+    $default  reduce using rule 50 (directive)
 
 
 state 65
 
-   39 directive: LABEL BLKW NUM .
+   49 directive: dirb NUM .
 
-    $default  reduce using rule 39 (directive)
+    $default  reduce using rule 49 (directive)
 
 
 state 66
 
-   40 directive: LABEL STRINGZ STR .
+   41 ldstb: LDST @7 REGISTER .
 
-    $default  reduce using rule 40 (directive)
+    $default  reduce using rule 41 (ldstb)
 
 
 state 67
 
-   38 directive: LABEL FILL LABEL .
+   44 not: NOT @8 REGISTER . @9 COMMA REGISTER
 
-    $default  reduce using rule 38 (directive)
+    $default  reduce using rule 43 (@9)
+
+    @9  go to state 82
 
 
 state 68
 
-   35 directive: LABEL FILL ADDR .
+   53 directive: BLKW @10 NUM .
 
-    $default  reduce using rule 35 (directive)
+    $default  reduce using rule 53 (directive)
 
 
 state 69
 
-   37 directive: LABEL FILL BINARY .
+   55 directive: STRINGZ @11 STR .
 
-    $default  reduce using rule 37 (directive)
+    $default  reduce using rule 55 (directive)
 
 
 state 70
 
-   36 directive: LABEL FILL NUM .
+   61 jsr: JSR @13 LABEL .
 
-    $default  reduce using rule 36 (directive)
+    $default  reduce using rule 61 (jsr)
 
 
 state 71
 
-   50 jsr: LABEL JSR LABEL .
+   64 jsr: JSRR @14 REGISTER . @15 COMMA ADDR
 
-    $default  reduce using rule 50 (jsr)
+    $default  reduce using rule 63 (@15)
+
+    @15  go to state 83
 
 
 state 72
 
-   51 jsr: LABEL JSRR REGISTER . COMMA ADDR
+   33 imopb: IMOP @2 REGISTER . @3 COMMA REGISTER
 
-    COMMA  shift, and go to state 85
+    $default  reduce using rule 32 (@3)
+
+    @3  go to state 84
 
 
 state 73
 
-   15 imop: LABEL IMOP REGISTER . COMMA REGISTER COMMA REGISTER
-   16     | LABEL IMOP REGISTER . COMMA REGISTER COMMA NUMBERS
-   17     | LABEL IMOP REGISTER . COMMA REGISTER COMMA BINARY
-   18     | LABEL IMOP REGISTER . COMMA REGISTER COMMA ADDR
+   37 bsop: BSOP @4 REGISTER . @5 COMMA REGISTER @6 COMMA NUMBERS
 
-    COMMA  shift, and go to state 86
+    $default  reduce using rule 35 (@5)
+
+    @5  go to state 85
 
 
 state 74
 
-   23 bsop: LABEL BSOP REGISTER . COMMA REGISTER COMMA NUMBERS
+   58 trap: TRAP @12 ADDR .
 
-    COMMA  shift, and go to state 87
+    $default  reduce using rule 58 (trap)
 
 
 state 75
 
-   46 trap: LABEL TRAP ADDR .
-
-    $default  reduce using rule 46 (trap)
-
-
-state 76
-
-   53 jsr: JSRR REGISTER COMMA . ADDR
-
-    ADDR  shift, and go to state 88
-
-
-state 77
-
-   19 imop: IMOP REGISTER COMMA . REGISTER COMMA REGISTER
-   20     | IMOP REGISTER COMMA . REGISTER COMMA NUMBERS
-   21     | IMOP REGISTER COMMA . REGISTER COMMA BINARY
-   22     | IMOP REGISTER COMMA . REGISTER COMMA ADDR
-
-    REGISTER  shift, and go to state 89
-
-
-state 78
-
-   24 bsop: BSOP REGISTER COMMA . REGISTER COMMA NUMBERS
-
-    REGISTER  shift, and go to state 90
-
-
-state 79
-
-    2 end: END EOF .
+    2 end: endb EOF .
 
     $default  reduce using rule 2 (end)
 
 
+state 76
+
+   27 imop: imopb COMMA REGISTER .
+
+    $default  reduce using rule 27 (imop)
+
+
+state 77
+
+   28 imop: imopb COMMA NUMBERS .
+
+    $default  reduce using rule 28 (imop)
+
+
+state 78
+
+   30 imop: imopb COMMA ADDR .
+
+    $default  reduce using rule 30 (imop)
+
+
+state 79
+
+   29 imop: imopb COMMA BINARY .
+
+    $default  reduce using rule 29 (imop)
+
+
 state 80
 
-   28 ldst: LDST REGISTER COMMA LABEL .
+   39 ldst: ldstb COMMA LABEL .
 
-    $default  reduce using rule 28 (ldst)
+    $default  reduce using rule 39 (ldst)
 
 
 state 81
 
-   26 ldst: LDST REGISTER COMMA ADDR .
+   38 ldst: ldstb COMMA ADDR .
 
-    $default  reduce using rule 26 (ldst)
+    $default  reduce using rule 38 (ldst)
 
 
 state 82
 
-   30 not: NOT REGISTER COMMA REGISTER .
+   44 not: NOT @8 REGISTER @9 . COMMA REGISTER
 
-    $default  reduce using rule 30 (not)
+    COMMA  shift, and go to state 86
 
 
 state 83
 
-   25 ldst: LABEL LDST REGISTER COMMA . ADDR
-   27     | LABEL LDST REGISTER COMMA . LABEL
+   64 jsr: JSRR @14 REGISTER @15 . COMMA ADDR
 
-    LABEL  shift, and go to state 91
-    ADDR   shift, and go to state 92
+    COMMA  shift, and go to state 87
 
 
 state 84
 
-   29 not: LABEL NOT REGISTER COMMA . REGISTER
+   33 imopb: IMOP @2 REGISTER @3 . COMMA REGISTER
 
-    REGISTER  shift, and go to state 93
+    COMMA  shift, and go to state 88
 
 
 state 85
 
-   51 jsr: LABEL JSRR REGISTER COMMA . ADDR
+   37 bsop: BSOP @4 REGISTER @5 . COMMA REGISTER @6 COMMA NUMBERS
 
-    ADDR  shift, and go to state 94
+    COMMA  shift, and go to state 89
 
 
 state 86
 
-   15 imop: LABEL IMOP REGISTER COMMA . REGISTER COMMA REGISTER
-   16     | LABEL IMOP REGISTER COMMA . REGISTER COMMA NUMBERS
-   17     | LABEL IMOP REGISTER COMMA . REGISTER COMMA BINARY
-   18     | LABEL IMOP REGISTER COMMA . REGISTER COMMA ADDR
+   44 not: NOT @8 REGISTER @9 COMMA . REGISTER
 
-    REGISTER  shift, and go to state 95
+    REGISTER  shift, and go to state 90
 
 
 state 87
 
-   23 bsop: LABEL BSOP REGISTER COMMA . REGISTER COMMA NUMBERS
+   64 jsr: JSRR @14 REGISTER @15 COMMA . ADDR
 
-    REGISTER  shift, and go to state 96
+    ADDR  shift, and go to state 91
 
 
 state 88
 
-   53 jsr: JSRR REGISTER COMMA ADDR .
+   33 imopb: IMOP @2 REGISTER @3 COMMA . REGISTER
 
-    $default  reduce using rule 53 (jsr)
+    REGISTER  shift, and go to state 92
 
 
 state 89
 
-   19 imop: IMOP REGISTER COMMA REGISTER . COMMA REGISTER
-   20     | IMOP REGISTER COMMA REGISTER . COMMA NUMBERS
-   21     | IMOP REGISTER COMMA REGISTER . COMMA BINARY
-   22     | IMOP REGISTER COMMA REGISTER . COMMA ADDR
+   37 bsop: BSOP @4 REGISTER @5 COMMA . REGISTER @6 COMMA NUMBERS
 
-    COMMA  shift, and go to state 97
+    REGISTER  shift, and go to state 93
 
 
 state 90
 
-   24 bsop: BSOP REGISTER COMMA REGISTER . COMMA NUMBERS
+   44 not: NOT @8 REGISTER @9 COMMA REGISTER .
 
-    COMMA  shift, and go to state 98
+    $default  reduce using rule 44 (not)
 
 
 state 91
 
-   27 ldst: LABEL LDST REGISTER COMMA LABEL .
+   64 jsr: JSRR @14 REGISTER @15 COMMA ADDR .
 
-    $default  reduce using rule 27 (ldst)
+    $default  reduce using rule 64 (jsr)
 
 
 state 92
 
-   25 ldst: LABEL LDST REGISTER COMMA ADDR .
+   33 imopb: IMOP @2 REGISTER @3 COMMA REGISTER .
 
-    $default  reduce using rule 25 (ldst)
+    $default  reduce using rule 33 (imopb)
 
 
 state 93
 
-   29 not: LABEL NOT REGISTER COMMA REGISTER .
+   37 bsop: BSOP @4 REGISTER @5 COMMA REGISTER . @6 COMMA NUMBERS
 
-    $default  reduce using rule 29 (not)
+    $default  reduce using rule 36 (@6)
+
+    @6  go to state 94
 
 
 state 94
 
-   51 jsr: LABEL JSRR REGISTER COMMA ADDR .
+   37 bsop: BSOP @4 REGISTER @5 COMMA REGISTER @6 . COMMA NUMBERS
 
-    $default  reduce using rule 51 (jsr)
+    COMMA  shift, and go to state 95
 
 
 state 95
 
-   15 imop: LABEL IMOP REGISTER COMMA REGISTER . COMMA REGISTER
-   16     | LABEL IMOP REGISTER COMMA REGISTER . COMMA NUMBERS
-   17     | LABEL IMOP REGISTER COMMA REGISTER . COMMA BINARY
-   18     | LABEL IMOP REGISTER COMMA REGISTER . COMMA ADDR
+   37 bsop: BSOP @4 REGISTER @5 COMMA REGISTER @6 COMMA . NUMBERS
 
-    COMMA  shift, and go to state 99
+    NUMBERS  shift, and go to state 96
 
 
 state 96
 
-   23 bsop: LABEL BSOP REGISTER COMMA REGISTER . COMMA NUMBERS
+   37 bsop: BSOP @4 REGISTER @5 COMMA REGISTER @6 COMMA NUMBERS .
 
-    COMMA  shift, and go to state 100
-
-
-state 97
-
-   19 imop: IMOP REGISTER COMMA REGISTER COMMA . REGISTER
-   20     | IMOP REGISTER COMMA REGISTER COMMA . NUMBERS
-   21     | IMOP REGISTER COMMA REGISTER COMMA . BINARY
-   22     | IMOP REGISTER COMMA REGISTER COMMA . ADDR
-
-    REGISTER  shift, and go to state 101
-    NUMBERS   shift, and go to state 102
-    ADDR      shift, and go to state 103
-    BINARY    shift, and go to state 104
-
-
-state 98
-
-   24 bsop: BSOP REGISTER COMMA REGISTER COMMA . NUMBERS
-
-    NUMBERS  shift, and go to state 105
-
-
-state 99
-
-   15 imop: LABEL IMOP REGISTER COMMA REGISTER COMMA . REGISTER
-   16     | LABEL IMOP REGISTER COMMA REGISTER COMMA . NUMBERS
-   17     | LABEL IMOP REGISTER COMMA REGISTER COMMA . BINARY
-   18     | LABEL IMOP REGISTER COMMA REGISTER COMMA . ADDR
-
-    REGISTER  shift, and go to state 106
-    NUMBERS   shift, and go to state 107
-    ADDR      shift, and go to state 108
-    BINARY    shift, and go to state 109
-
-
-state 100
-
-   23 bsop: LABEL BSOP REGISTER COMMA REGISTER COMMA . NUMBERS
-
-    NUMBERS  shift, and go to state 110
-
-
-state 101
-
-   19 imop: IMOP REGISTER COMMA REGISTER COMMA REGISTER .
-
-    $default  reduce using rule 19 (imop)
-
-
-state 102
-
-   20 imop: IMOP REGISTER COMMA REGISTER COMMA NUMBERS .
-
-    $default  reduce using rule 20 (imop)
-
-
-state 103
-
-   22 imop: IMOP REGISTER COMMA REGISTER COMMA ADDR .
-
-    $default  reduce using rule 22 (imop)
-
-
-state 104
-
-   21 imop: IMOP REGISTER COMMA REGISTER COMMA BINARY .
-
-    $default  reduce using rule 21 (imop)
-
-
-state 105
-
-   24 bsop: BSOP REGISTER COMMA REGISTER COMMA NUMBERS .
-
-    $default  reduce using rule 24 (bsop)
-
-
-state 106
-
-   15 imop: LABEL IMOP REGISTER COMMA REGISTER COMMA REGISTER .
-
-    $default  reduce using rule 15 (imop)
-
-
-state 107
-
-   16 imop: LABEL IMOP REGISTER COMMA REGISTER COMMA NUMBERS .
-
-    $default  reduce using rule 16 (imop)
-
-
-state 108
-
-   18 imop: LABEL IMOP REGISTER COMMA REGISTER COMMA ADDR .
-
-    $default  reduce using rule 18 (imop)
-
-
-state 109
-
-   17 imop: LABEL IMOP REGISTER COMMA REGISTER COMMA BINARY .
-
-    $default  reduce using rule 17 (imop)
-
-
-state 110
-
-   23 bsop: LABEL BSOP REGISTER COMMA REGISTER COMMA NUMBERS .
-
-    $default  reduce using rule 23 (bsop)
+    $default  reduce using rule 37 (bsop)

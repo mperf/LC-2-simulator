@@ -44,9 +44,10 @@ int countline=1;
 ["].*["]     return STR; 
 "," return COMMA;
 <<EOF>> return EOF;
-.   printf("%s no \n",yytext);
+.   ;
 
 
 %%
 int yywrap (void) {return 1;}
 //short int per ca2 registri
+//sistemare limite minimo di bit per BINARY
