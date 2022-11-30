@@ -43,7 +43,7 @@ int countline=1;
 [a-zA-Z_][a-zA-Z0-9_]* return LABEL;
 ["].*["]     return STR; 
 "," return COMMA;
-<<EOF>> return EOF;
+<<EOF>> return EOFF;
 .   ;
 
 

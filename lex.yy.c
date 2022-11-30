@@ -1025,7 +1025,7 @@ return COMMA;
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
 #line 46 "lexer.l"
-return EOF;
+return EOFF;
 	YY_BREAK
 case 30:
 YY_RULE_SETUP

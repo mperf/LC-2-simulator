@@ -1,7 +1,7 @@
+typedef struct {
+        char * token_val;
+        char * token;
+        int line_num;
+}symbol_table;
 
-
-typedef struct{
-    char label[LABEL_LEN+1];
-    char opcode[OPCODE_LEN+1];
-    char operands[OPERANDS_LEN+1];
-}LCinstruction;
+symbol_table symtab[512];

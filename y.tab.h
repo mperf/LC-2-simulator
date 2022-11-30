@@ -41,8 +41,8 @@
    enum yytokentype {
      REGISTER = 258,
      RETS = 259,
-     EOF = 260,
-     LDST = 261,
+     LDST = 260,
+     EOFF = 261,
      NOT = 262,
      LABEL = 263,
      NUMBERS = 264,
@@ -68,8 +68,8 @@
 /* Tokens.  */
 #define REGISTER 258
 #define RETS 259
-#define EOF 260
-#define LDST 261
+#define LDST 260
+#define EOFF 261
 #define NOT 262
 #define LABEL 263
 #define NUMBERS 264

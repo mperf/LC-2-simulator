@@ -9,7 +9,7 @@ Grammar
 
     1 program: orig lines end
 
-    2 end: endb EOF
+    2 end: endb EOFF
 
     3 endb: END
 
@@ -116,8 +116,8 @@ $end (0) 0
 error (256)
 REGISTER (258) 27 33 37 41 44 64
 RETS (259) 59
-EOF (260) 2
-LDST (261) 41
+LDST (260) 41
+EOFF (261) 2
 NOT (262) 44
 LABEL (263) 26 39 46 51 61
 NUMBERS (264) 28 37
@@ -677,9 +677,9 @@ state 46
 
 state 47
 
-    2 end: endb . EOF
+    2 end: endb . EOFF
 
-    EOF  shift, and go to state 75
+    EOFF  shift, and go to state 75
 
 
 state 48
@@ -889,7 +889,7 @@ state 74
 
 state 75
 
-    2 end: endb EOF .
+    2 end: endb EOFF .
 
     $default  reduce using rule 2 (end)
 
