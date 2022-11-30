@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <strings.h>
-#include "y.tab.c"
+#include "structures.h"
+#include "proto.h"
+extern int yyparse(),errors,count,countline,last,countn;
+extern symbol_table symtab[512];
+extern char *yytext;
 
 int main() {
     yyparse();
@@ -24,9 +28,7 @@ void printSymtab(symbol_table* table){
 	for(i=0; i<count; i++) {
 		printf("%s\t\t%s\t\t%d\t\t\n", table[i].token_val, table[i].token, table[i].line_num);
 	}
-	for(i=0;i<count;i++) {
-		free(symtab[i].token_val);
-	}
+	
 	printf("\n\n");
 }
 

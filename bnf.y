@@ -1,11 +1,12 @@
 
 %{
 
-#include"lex.yy.c"
+//#include"lex.yy.c"
 #include "structures.h"   
 #include "proto.h"
-int yylex();
-int yywrap();
+#include <stdio.h>
+extern int yylex();
+extern int yywrap();
 
 
 int countn=1,q,count=0,last=0,errors=0;
