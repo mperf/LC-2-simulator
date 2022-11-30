@@ -94,6 +94,7 @@ directive : dirb ADDR  {add('V');}
           | dirb LABEL  {add('L');}
           | BLKW {add('D');} NUM  {add('V');}
           | STRINGZ {add('D');} STR {add('S');}
+          | endb
           ;
 
 dirb      : FILL {add('D');}

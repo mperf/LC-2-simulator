@@ -13,7 +13,7 @@ int main() {
 
 
 
-
+//aggiungere nella struct contatore di occorrenze, se label esce due volte warning possibile errore logico
 
 void printSymtab(symbol_table* table){
     printf("\n\n");
@@ -40,8 +40,8 @@ void yyerror(const char* msg) {
 
 void add(char type){
         
-        q=search(yytext);
-        if(!q){
+        //q=search(yytext);
+        //if(!q){
         switch(type){
 
                 case 'O':
@@ -82,7 +82,7 @@ void add(char type){
 
                 }
                 count++;
-        }
+       // }
 }
 
 int search(char *type) { 
