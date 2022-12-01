@@ -124,14 +124,12 @@
 /* Copy the first part of user declarations.  */
 #line 2 "bnf.y"
 
-
-//#include"lex.yy.c"
 #include "structures.h"   
-#include "proto.h"
 #include <stdio.h>
+
 extern int yylex();
 extern int yywrap();
-
+extern void add(),yyerror();
 
 int countn=1,q,count=0,last=0,errors=0;
 
@@ -168,7 +166,7 @@ typedef int YYSTYPE;
 
 
 /* Line 216 of yacc.c.  */
-#line 172 "y.tab.c"
+#line 170 "y.tab.c"
 
 #ifdef short
 # undef short
@@ -476,13 +474,13 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    22,    22,    25,    28,    31,    31,    34,    35,    38,
-      39,    40,    41,    42,    43,    44,    45,    46,    47,    48,
-      49,    50,    51,    52,    53,    54,    55,    58,    61,    62,
-      63,    64,    67,    67,    67,    71,    71,    71,    71,    75,
-      76,    79,    79,    82,    82,    82,    85,    86,    89,    92,
-      93,    94,    95,    96,    96,    97,    97,    98,   101,   105,
-     105,   108,   111,   111,   112,   112,   112
+       0,    20,    20,    23,    26,    29,    29,    32,    33,    36,
+      37,    38,    39,    40,    41,    42,    43,    44,    45,    46,
+      47,    48,    49,    50,    51,    52,    53,    56,    59,    60,
+      61,    62,    65,    65,    65,    69,    69,    69,    69,    73,
+      74,    77,    77,    80,    80,    80,    83,    84,    87,    90,
+      91,    92,    93,    94,    94,    95,    95,    96,    99,   103,
+     103,   106,   109,   109,   110,   110,   110
 };
 #endif
 
@@ -1448,233 +1446,233 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 22 "bnf.y"
+#line 20 "bnf.y"
     {printf("input accepted\n");last=1;}
     break;
 
   case 4:
-#line 28 "bnf.y"
+#line 26 "bnf.y"
     {add('D');}
     break;
 
   case 5:
-#line 31 "bnf.y"
+#line 29 "bnf.y"
     {add('D');}
     break;
 
   case 6:
-#line 31 "bnf.y"
+#line 29 "bnf.y"
     {countn++;}
     break;
 
   case 7:
-#line 34 "bnf.y"
+#line 32 "bnf.y"
     {countn++;}
     break;
 
   case 8:
-#line 35 "bnf.y"
+#line 33 "bnf.y"
     {countn++;}
     break;
 
   case 27:
-#line 58 "bnf.y"
+#line 56 "bnf.y"
     {add('L');}
     break;
 
   case 28:
-#line 61 "bnf.y"
+#line 59 "bnf.y"
     { add('R'); }
     break;
 
   case 29:
-#line 62 "bnf.y"
+#line 60 "bnf.y"
     { add('V'); }
     break;
 
   case 30:
-#line 63 "bnf.y"
+#line 61 "bnf.y"
     { add('V'); }
     break;
 
   case 31:
-#line 64 "bnf.y"
+#line 62 "bnf.y"
     { add('V'); }
     break;
 
   case 32:
-#line 67 "bnf.y"
+#line 65 "bnf.y"
     { add('O'); }
     break;
 
   case 33:
-#line 67 "bnf.y"
+#line 65 "bnf.y"
     { add('R'); }
     break;
 
   case 34:
-#line 67 "bnf.y"
+#line 65 "bnf.y"
     { add('R'); }
     break;
 
   case 35:
-#line 71 "bnf.y"
+#line 69 "bnf.y"
     {add('O');}
     break;
 
   case 36:
-#line 71 "bnf.y"
+#line 69 "bnf.y"
     {add('R');}
     break;
 
   case 37:
-#line 71 "bnf.y"
+#line 69 "bnf.y"
     {add('R');}
     break;
 
   case 38:
-#line 71 "bnf.y"
+#line 69 "bnf.y"
     {add('V');}
     break;
 
   case 39:
-#line 75 "bnf.y"
+#line 73 "bnf.y"
     {add('V');}
     break;
 
   case 40:
-#line 76 "bnf.y"
+#line 74 "bnf.y"
     {add('L');}
     break;
 
   case 41:
-#line 79 "bnf.y"
+#line 77 "bnf.y"
     {add('O');}
     break;
 
   case 42:
-#line 79 "bnf.y"
+#line 77 "bnf.y"
     {add('R');}
     break;
 
   case 43:
-#line 82 "bnf.y"
+#line 80 "bnf.y"
     {add('O');}
     break;
 
   case 44:
-#line 82 "bnf.y"
+#line 80 "bnf.y"
     {add('R');}
     break;
 
   case 45:
-#line 82 "bnf.y"
+#line 80 "bnf.y"
     {add('R');}
     break;
 
   case 46:
-#line 85 "bnf.y"
+#line 83 "bnf.y"
     {add('V');}
     break;
 
   case 47:
-#line 86 "bnf.y"
+#line 84 "bnf.y"
     {add('L');}
     break;
 
   case 48:
-#line 89 "bnf.y"
+#line 87 "bnf.y"
     {add('J');}
     break;
 
   case 49:
-#line 92 "bnf.y"
+#line 90 "bnf.y"
     {add('V');}
     break;
 
   case 50:
-#line 93 "bnf.y"
+#line 91 "bnf.y"
     {add('V');}
     break;
 
   case 51:
-#line 94 "bnf.y"
+#line 92 "bnf.y"
     {add('V');}
     break;
 
   case 52:
-#line 95 "bnf.y"
+#line 93 "bnf.y"
     {add('L');}
     break;
 
   case 53:
-#line 96 "bnf.y"
+#line 94 "bnf.y"
     {add('D');}
     break;
 
   case 54:
-#line 96 "bnf.y"
+#line 94 "bnf.y"
     {add('V');}
     break;
 
   case 55:
-#line 97 "bnf.y"
+#line 95 "bnf.y"
     {add('D');}
     break;
 
   case 56:
-#line 97 "bnf.y"
+#line 95 "bnf.y"
     {add('S');}
     break;
 
   case 58:
-#line 101 "bnf.y"
+#line 99 "bnf.y"
     {add('D');}
     break;
 
   case 59:
-#line 105 "bnf.y"
+#line 103 "bnf.y"
     {add('O');}
     break;
 
   case 60:
-#line 105 "bnf.y"
+#line 103 "bnf.y"
     {add('V');}
     break;
 
   case 61:
-#line 108 "bnf.y"
+#line 106 "bnf.y"
     {add('O');}
     break;
 
   case 62:
-#line 111 "bnf.y"
+#line 109 "bnf.y"
     {add('O');}
     break;
 
   case 63:
-#line 111 "bnf.y"
+#line 109 "bnf.y"
     {add('L');}
     break;
 
   case 64:
-#line 112 "bnf.y"
+#line 110 "bnf.y"
     {add('O');}
     break;
 
   case 65:
-#line 112 "bnf.y"
+#line 110 "bnf.y"
     {add('R');}
     break;
 
   case 66:
-#line 112 "bnf.y"
+#line 110 "bnf.y"
     {add('V');}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1678 "y.tab.c"
+#line 1676 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1888,7 +1886,7 @@ yyreturn:
 }
 
 
-#line 115 "bnf.y"
+#line 113 "bnf.y"
 
 
 
