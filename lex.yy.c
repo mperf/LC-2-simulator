@@ -582,15 +582,14 @@ char *yytext;
 #line 2 "lexer.l"
 
 
-int yylex();
+
 //.   return printf("error\n");
 //trap 21-22-23-25
 int countline=1;
 #include "y.tab.h"
-
-
+#include "tree.h"
+#line 591 "lex.yy.c"
 #line 592 "lex.yy.c"
-#line 593 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -807,10 +806,10 @@ YY_DECL
 		}
 
 	{
-#line 15 "lexer.l"
+#line 14 "lexer.l"
 
 
-#line 813 "lex.yy.c"
+#line 812 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -879,165 +878,165 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 17 "lexer.l"
-{return RETS;} 
+#line 16 "lexer.l"
+{strcpy(yylval.nd_obj.name,(yytext)); return RETS;} 
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 18 "lexer.l"
-return LDST;
+#line 17 "lexer.l"
+{strcpy(yylval.nd_obj.name,(yytext)); return LDST;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 19 "lexer.l"
-{return NOT;}
+#line 18 "lexer.l"
+{strcpy(yylval.nd_obj.name,(yytext));  return NOT;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 20 "lexer.l"
-{return IMOP;}
+#line 19 "lexer.l"
+{strcpy(yylval.nd_obj.name,(yytext));  return IMOP;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 21 "lexer.l"
-{return BSOP;}
+#line 20 "lexer.l"
+{strcpy(yylval.nd_obj.name,(yytext));  return BSOP;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 22 "lexer.l"
-{return TRAP;}
+#line 21 "lexer.l"
+{strcpy(yylval.nd_obj.name,(yytext));  return TRAP;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 23 "lexer.l"
-return REGISTER;
+#line 22 "lexer.l"
+{strcpy(yylval.nd_obj.name,(yytext));  return REGISTER;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 24 "lexer.l"
-return JUMP;
+#line 23 "lexer.l"
+{strcpy(yylval.nd_obj.name,(yytext));  return JUMP;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 25 "lexer.l"
-return JUMP;
+#line 24 "lexer.l"
+{strcpy(yylval.nd_obj.name,(yytext));  return JUMP;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 26 "lexer.l"
-return JUMP;
+#line 25 "lexer.l"
+{strcpy(yylval.nd_obj.name,(yytext));  return JUMP;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 27 "lexer.l"
-return JUMP;
+#line 26 "lexer.l"
+{strcpy(yylval.nd_obj.name,(yytext));  return JUMP;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 28 "lexer.l"
-return JSR;
+#line 27 "lexer.l"
+{strcpy(yylval.nd_obj.name,(yytext));  return JSR;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 29 "lexer.l"
-return JSRR;
+#line 28 "lexer.l"
+{strcpy(yylval.nd_obj.name,(yytext));  return JSRR;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 30 "lexer.l"
-return ORIG;
+#line 29 "lexer.l"
+{strcpy(yylval.nd_obj.name,(yytext));  return ORIG;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 31 "lexer.l"
-return END;
+#line 30 "lexer.l"
+{strcpy(yylval.nd_obj.name,(yytext));  return END;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 32 "lexer.l"
-return BLKW;
+#line 31 "lexer.l"
+{strcpy(yylval.nd_obj.name,(yytext));  return BLKW;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 33 "lexer.l"
-return FILL;
+#line 32 "lexer.l"
+{strcpy(yylval.nd_obj.name,(yytext));  return FILL;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 34 "lexer.l"
-return STRINGZ;
+#line 33 "lexer.l"
+{strcpy(yylval.nd_obj.name,(yytext));  return STRINGZ;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 35 "lexer.l"
-return BINARY;
+#line 34 "lexer.l"
+{strcpy(yylval.nd_obj.name,(yytext));  return BINARY;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 36 "lexer.l"
-return ADDR;
+#line 35 "lexer.l"
+{strcpy(yylval.nd_obj.name,(yytext));  return ADDR;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 37 "lexer.l"
-
+#line 36 "lexer.l"
+{ ; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 38 "lexer.l"
+#line 37 "lexer.l"
 { ; }
 	YY_BREAK
 case 23:
 /* rule 23 can match eol */
 YY_RULE_SETUP
-#line 39 "lexer.l"
+#line 38 "lexer.l"
 countline++;
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 40 "lexer.l"
-return NUMBERS;
+#line 39 "lexer.l"
+{strcpy(yylval.nd_obj.name,(yytext));  return NUMBERS;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 41 "lexer.l"
-return NUMBERS;
+#line 40 "lexer.l"
+{strcpy(yylval.nd_obj.name,(yytext));  return NUMBERS;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 42 "lexer.l"
-return NUM;
+#line 41 "lexer.l"
+{strcpy(yylval.nd_obj.name,(yytext));  return NUM;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 43 "lexer.l"
-return LABEL;
+#line 42 "lexer.l"
+{strcpy(yylval.nd_obj.name,(yytext));  return LABEL;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 44 "lexer.l"
-return STR; 
+#line 43 "lexer.l"
+{strcpy(yylval.nd_obj.name,(yytext));  return STR;} 
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 45 "lexer.l"
-return COMMA;
+#line 44 "lexer.l"
+{strcpy(yylval.nd_obj.name,(yytext));  return COMMA;}
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
-#line 46 "lexer.l"
-return EOFF;
+#line 45 "lexer.l"
+{strcpy(yylval.nd_obj.name,(yytext));  return EOFF;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 47 "lexer.l"
-;
+#line 46 "lexer.l"
+{ ; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 50 "lexer.l"
+#line 49 "lexer.l"
 ECHO;
 	YY_BREAK
-#line 1040 "lex.yy.c"
+#line 1039 "lex.yy.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -2052,7 +2051,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 50 "lexer.l"
+#line 49 "lexer.l"
 
 int yywrap (void) {return 1;}
 //short int per ca2 registri

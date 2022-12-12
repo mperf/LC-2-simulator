@@ -2,112 +2,166 @@
 %{
 #include "structures.h"   
 #include <stdio.h>
+#include "tree.h"
 
 extern int yylex();
 extern int yywrap();
 extern void add(),yyerror();
 
+
 int countn=1,q,count=0,last=0,errors=0;
 
 %}
 
+%union { 
+	struct var_name { 
+		char name[100]; 
+		struct node* nd;
+	} nd_obj; 
+}
 
-%token REGISTER RETS LDST EOFF NOT LABEL NUMBERS ORIG COMMENT JUMP COMMA ADDR END BLKW STRINGZ BINARY NUM FILL STR JSR JSRR IMOP BSOP TRAP
+
+%token <nd_obj> REGISTER RETS LDST EOFF NOT LABEL NUMBERS ORIG COMMENT JUMP COMMA ADDR END BLKW STRINGZ BINARY NUM FILL STR JSR JSRR IMOP BSOP TRAP
+%type <nd_obj> program orig lines end endb code ldst ldstb imop imopb bsop ret jump jumpb directive dirb jsr not trap codeb 
 %start program
 
 %%
 
-program :   orig lines end  {printf("input accepted\n");last=1;}
+program :   orig lines end  {
+        $2.nd=mknode($2.nd, $3.nd,"code"); 
+        $$.nd=mknode($1.nd, $2.nd,"program"); 
+        head = $$.nd;    
+        printf("input accepted\n");
+        last=1;
+        }
         ;
 
-end     : endb EOFF
+end     : endb EOFF { $$.nd = mknode($1.nd, NULL, "end"); }
         ;
 
-endb    : END  {add('D');}
+endb    :   END  {
+         add('D');
+         $$.nd = mknode(NULL, NULL, "endchar"); 
+         }
         ;
 
-orig    :   ORIG  {add('D');} ADDR  {countn++;}
+orig    :   ORIG  {add('D');} ADDR  {add('V');countn++;
+          $$.nd=mknode(NULL, NULL, "orig");
+         }
         ;
 
-lines   :   code        {countn++;}
-        |   lines code  {countn++;}
+lines   :   code        {countn++; $1.nd=mknode($1.nd, NULL, "line"); } 
+        |   lines code  {countn++; $$.nd=mknode($1.nd,$2.nd,"lines");}
         ;
 
-code    :   ldst 
-        |   imop
-        |   bsop
-        |   ret
-        |   jump
-        |   directive 
-        |   jsr
-        |   not
-        |   trap
-        |   codeb ldst 
-        |   codeb imop
-        |   codeb bsop
-        |   codeb ret
-        |   codeb jump
-        |   codeb directive 
-        |   codeb jsr
-        |   codeb not
-        |   codeb trap
+code    :   ldst                {$$.nd=mknode(NULL,$1.nd,"ldst");}
+        |   imop                {$$.nd=mknode(NULL,$1.nd,"imop");}
+        |   bsop                {$$.nd=mknode(NULL,$1.nd,"bsop");}
+        |   ret                 {$$.nd=mknode(NULL,$1.nd,"ret");}
+        |   jump                {$$.nd=mknode(NULL,$1.nd,"jump");}
+        |   directive           {$$.nd=mknode(NULL,$1.nd,"directive");} 
+        |   jsr                 {$$.nd=mknode(NULL,$1.nd,"jsr");}
+        |   not                 {$$.nd=mknode(NULL,$1.nd,"not");}
+        |   trap                {$$.nd=mknode(NULL,$1.nd,"trap");}
+        |   codeb ldst          {$$.nd=mknode(NULL,$2.nd,"c-ldst");}
+        |   codeb imop          {$$.nd=mknode($1.nd,$2.nd,"c-imop");}
+        |   codeb bsop          {$$.nd=mknode($1.nd,$2.nd,"c-bsop");}
+        |   codeb ret           {$$.nd=mknode($1.nd,$2.nd,"c-ret");}
+        |   codeb jump          {$$.nd=mknode($1.nd,$2.nd,"c-jump");}
+        |   codeb directive     {$$.nd=mknode($1.nd,$2.nd,"c-directive");}
+        |   codeb jsr           {$$.nd=mknode($1.nd,$2.nd,"c-jsr");}
+        |   codeb not           {$$.nd=mknode($1.nd,$2.nd,"c-not");}
+        |   codeb trap          {$$.nd=mknode($1.nd,$2.nd,"c-trap");}
         ;
 
-codeb   :   LABEL {add('L');}
+codeb   :   LABEL {add('L'); $$.nd=mknode(NULL,NULL,"label");}
         ;
 
-imop    :   imopb COMMA REGISTER { add('R'); }
-        |   imopb COMMA NUMBERS { add('V'); }
-        |   imopb COMMA BINARY { add('V'); }
-        |   imopb COMMA ADDR { add('V'); }
+imop    :   imopb COMMA REGISTER { 
+          add('R'); 
+          $2.nd=mknode(NULL,NULL,"operands");
+          $$.nd=mknode($1.nd,$2.nd,"op");
+          } 
+        |   imopb COMMA NUMBERS { 
+          add('V'); 
+          $2.nd=mknode(NULL,NULL,"operands");
+          $$.nd=mknode($1.nd,$2.nd,"op");
+        }
+        |   imopb COMMA BINARY { 
+          add('V'); 
+          $2.nd=mknode(NULL,NULL,"operands");
+          $$.nd=mknode($1.nd,$2.nd,"op");
+        }
+        |   imopb COMMA ADDR { 
+          add('V'); 
+          $2.nd=mknode(NULL,NULL,"operands");
+          $$.nd=mknode($1.nd,$2.nd,"op");
+        }
         ;
 
-imopb   : IMOP  { add('O'); } REGISTER  { add('R'); } COMMA REGISTER  { add('R'); }
+imopb   : IMOP  { add('O'); } REGISTER  { add('R'); } COMMA REGISTER  { 
+          add('R'); 
+          $$.nd=mknode(NULL,NULL,"op");
+          }
         ;
 
     
-bsop    :   BSOP  {add('O');} REGISTER  {add('R');} COMMA REGISTER {add('R');}  COMMA NUMBERS {add('V');}
+bsop    :   BSOP  {add('O');} REGISTER  {add('R');} COMMA REGISTER {add('R');}  COMMA NUMBERS {
+          add('V');
+          $$.nd=mknode(NULL,NULL,"op");
+          }
         ;
 
 
-ldst    :   ldstb COMMA ADDR {add('V');}
-        |   ldstb COMMA LABEL {add('L');}
+ldst    :   ldstb COMMA ADDR {
+          add('V');
+          $2.nd=mknode(NULL,NULL,"operands");
+          $$.nd=mknode($1.nd,$2.nd,"op");
+          }
+        |   ldstb COMMA LABEL {
+          add('L');
+          $2.nd=mknode(NULL,NULL,"operands");
+          $$.nd=mknode($1.nd,$2.nd,"op");
+          }
         ;
 
-ldstb   :   LDST  {add('O');} REGISTER {add('R');} 
+ldstb   :   LDST  {add('O');} REGISTER {add('R'); $$.nd=mknode(NULL,NULL,"op");} 
         ;
 
-not     :   NOT  {add('O');} REGISTER {add('R');} COMMA REGISTER {add('R');}
+not     :   NOT  {add('O');} REGISTER {add('R');} COMMA REGISTER {
+          add('R');
+          $$.nd=mknode(NULL,NULL,"op");
+          }
         ;
 
-jump    :   jumpb ADDR {add('V');}
-        |   jumpb LABEL {add('L');}
+jump    :   jumpb ADDR {add('V'); $$.nd=mknode($1.nd,NULL,"op");}
+        |   jumpb LABEL {add('L'); $$.nd=mknode($1.nd,NULL,"op");}
         ;
 
-jumpb   :   JUMP {add('J');}
+jumpb   :   JUMP {add('J',$1.name);  $$.nd = mknode(NULL, NULL, $1.name);}
         ;
 
-directive : dirb ADDR  {add('V');}
-          | dirb NUM  {add('V');}
-          | dirb BINARY  {add('V');}
-          | dirb LABEL  {add('L');}
-          | BLKW {add('D');} NUM  {add('V');}
-          | STRINGZ {add('D');} STR {add('S');}
-          | endb
+directive : dirb ADDR  {add('V'); $$.nd=mknode($1.nd,NULL,"op");}
+          | dirb NUM  {add('V'); $$.nd=mknode($1.nd,NULL,"op");}
+          | dirb BINARY  {add('V'); $$.nd=mknode($1.nd,NULL,"op");}
+          | dirb LABEL  {add('L'); $$.nd=mknode($1.nd,NULL,"op");}
+          | BLKW {add('D');} NUM  {add('V'); $$.nd=mknode(NULL,NULL,"op");}
+          | STRINGZ {add('D');} STR {add('S'); $$.nd=mknode(NULL,NULL,"op");}
+          | endb {$$.nd=mknode($1.nd,NULL,"op");}
           ;
 
-dirb      : FILL {add('D');}
+dirb      : FILL {add('D'); $$.nd = mknode(NULL, NULL, "fill");}
           ;
 
 
-trap    :  TRAP {add('O');} ADDR {add('V');}
+trap    :  TRAP {add('O');} ADDR {add('V'); $$.nd = mknode(NULL, NULL, "trap");}
         ;
 
-ret     :  RETS {add('O');}
+ret     :  RETS {add('O'); $$.nd = mknode(NULL, NULL, $1.name);}
         ;
 
-jsr     :   JSR  {add('O');} LABEL {add('L');}
-        |   JSRR  {add('O');} REGISTER  {add('R');} COMMA ADDR {add('V');}
+jsr     :   JSR  {add('O');} LABEL {add('L'); $$.nd = mknode(NULL, NULL, "jsr");}
+        |   JSRR  {add('O');} REGISTER  {add('R');} COMMA ADDR {add('V'); $$.nd = mknode(NULL, NULL, $1.name);}
         ;
 
 %%

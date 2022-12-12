@@ -3,6 +3,7 @@
         "*.ejs": "html",
         "stdio.h": "c",
         "proto.h": "c",
-        "structures.h": "c"
+        "structures.h": "c",
+        "strings.h": "c"
     }
 }

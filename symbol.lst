@@ -1,0 +1,91 @@
+
+
+		 PHASE 1: LEXICAL ANALYSIS 
+
+
+VALUE					TOKEN_TYPE   	LINE NUMBER   	OCCURRENCES
+_________________________________________________________________________
+
+.ORIG            		directive		 1				 1		
+X3000            		   value		 1				 1		
+LEA              		  opcode		 2				 1		
+R1               		register		 2				 1		
+IONE             		   label		 2				 1		
+LEA              		  opcode		 3				 2		
+R2               		register		 3				 1		
+ITWO             		   label		 3				 1		
+JSR              		  opcode		 4				 1		
+COMPAR           		   label		 4				 1		
+FINE             		   label		 5				 1		
+BRNZP            		    jump		 5				 1		
+FINE             		   label		 5				 2		
+IONE             		   label		 6				 2		
+.FILL            		directive		 6				 1		
+ONE              		   label		 6				 1		
+ITWO             		   label		 7				 2		
+.FILL            		directive		 7				 2		
+TWO              		   label		 7				 1		
+ONE              		   label		 8				 2		
+.FILL            		directive		 8				 3		
+B1111100000101010		   value		 8				 1		
+TWO              		   label		 9				 2		
+.FILL            		directive		 9				 4		
+34               		   value		 9				 1		
+COMPAR           		   label		10				 2		
+LDR              		  opcode		10				 1		
+R1               		register		10				 2		
+R1               		register		10				 3		
+#0               		   value		10				 1		
+LDR              		  opcode		11				 2		
+R2               		register		11				 2		
+R2               		register		11				 3		
+#0               		   value		11				 2		
+LDR              		  opcode		12				 3		
+R1               		register		12				 4		
+R1               		register		12				 5		
+#0               		   value		12				 3		
+LDR              		  opcode		13				 4		
+R2               		register		13				 4		
+R2               		register		13				 5		
+#0               		   value		13				 4		
+NOT              		  opcode		14				 1		
+R0               		register		14				 1		
+R1               		register		14				 6		
+ADD              		  opcode		15				 1		
+R0               		register		15				 2		
+R0               		register		15				 3		
+#1               		   value		15				 1		
+ADD              		  opcode		16				 2		
+R0               		register		16				 4		
+R0               		register		16				 5		
+R2               		register		16				 6		
+BRN              		    jump		17				 1		
+PLUS             		   label		17				 1		
+BRP              		    jump		18				 1		
+NEG              		   label		18				 1		
+RET              		  opcode		19				 1		
+NEG              		   label		20				 2		
+AND              		  opcode		20				 1		
+R0               		register		20				 6		
+R0               		register		20				 7		
+#0               		   value		20				 5		
+ADD              		  opcode		21				 3		
+R0               		register		21				 8		
+R0               		register		21				 9		
+#-1              		   value		21				 1		
+BRNZP            		    jump		22				 2		
+FINE             		   label		22				 3		
+PLUS             		   label		23				 2		
+AND              		  opcode		23				 2		
+R0               		register		23				10		
+R0               		register		23				11		
+#0               		   value		23				 6		
+ADD              		  opcode		24				 4		
+R0               		register		24				12		
+R0               		register		24				13		
+#1               		   value		24				 2		
+BRNZP            		    jump		25				 3		
+FINE             		   label		25				 4		
+.END             		directive		26				 1		
+
+
