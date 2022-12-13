@@ -124,7 +124,7 @@
 /* Copy the first part of user declarations.  */
 #line 2 "bnf.y"
 
-#include "structures.h"   
+ 
 #include <stdio.h>
 #include "tree.h"
 
@@ -133,7 +133,7 @@ extern int yywrap();
 extern void add(),yyerror();
 
 
-int countn=1,q,count=0,last=0,errors=0;
+int countn=1,count=0,last=0,errors=0;
 
 
 

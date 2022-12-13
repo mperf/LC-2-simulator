@@ -1,0 +1,7 @@
+            structures.h
+                |   |
+                |   |
+tree.h  semantic.h  symtab.h
+   |        |           |
+   |        |           |
+ ast.c  semantics.c symbol_table.c

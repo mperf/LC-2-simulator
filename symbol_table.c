@@ -1,16 +1,12 @@
 #include <stdio.h>
 #include <strings.h>
 #include "structures.h"
-
-void add(char type, char *token);
-int search(char *type);
-void printSymtab(symbol_table* table);
-void yyerror(const char *s);
-void toupp(char*s);
+#include "symtab.h"
 
 extern int count,countline,last,errors,countn;
 extern char *yytext;
 
+//stampo su file lista dei simboli
 void printSymtab(symbol_table* table){
     FILE *tab;
     tab=fopen("symbol.lst","w");
@@ -26,7 +22,7 @@ void printSymtab(symbol_table* table){
 	fprintf(tab,"\n\n");
 }
 
-
+//errori di yacc
 void yyerror(const char* msg) {
         if(!last){
                 fprintf(stderr, "%s at line %d code line %d\n\"%s\" \n", msg,countline,countn,yytext);
@@ -34,7 +30,8 @@ void yyerror(const char* msg) {
         }  
 }
 
-void add(char type, char * token){
+//aggiungo keyword alla lista dei simboli
+void add(char type){
         toupp(yytext);
         int q=search(yytext);
         switch(type){
@@ -85,7 +82,7 @@ void add(char type, char * token){
                 }
                 count++;
 }
-
+//funzione per trovare quante volte la keyword è già presente nella lista dei simboli
 int search(char *type) { 
     int i,o=1; 
     for(i=count-1; i>=0; i--) {
@@ -95,7 +92,7 @@ int search(char *type) {
     } 
     return o;
 }
-
+//to upper case per verificare che i nomi siano uguali case-unsensitive
 void toupp(char*s){
     int n=0,i;
     for(;s[n]!= '\0';n++);

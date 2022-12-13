@@ -4,6 +4,7 @@
         "stdio.h": "c",
         "proto.h": "c",
         "structures.h": "c",
-        "strings.h": "c"
+        "strings.h": "c",
+        "limits": "c"
     }
 }

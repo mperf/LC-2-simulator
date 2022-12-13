@@ -1,9 +1,5 @@
 %{
 
-
-
-//.   return printf("error\n");
-//trap 21-22-23-25
 int countline=1;
 #include "y.tab.h"
 #include "tree.h"

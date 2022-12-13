@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "tree.h"
 
+//funzione per dichiarare e assegnare i valori all'albero
 struct node* mknode(struct node *left, struct node *right, char *token) {
   struct node *newnode = (struct node*) malloc(sizeof(struct node));
   char *newstr = (char*) malloc(strlen(token)+1);
@@ -13,6 +14,7 @@ struct node* mknode(struct node *left, struct node *right, char *token) {
   return(newnode);
 }
 
+//stampo su file albero
 void printSyntaxTree(struct node *tree){
     FILE *ftree;
     ftree=fopen("ast.txt","w");

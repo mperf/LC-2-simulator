@@ -27,7 +27,7 @@ ITWO             		   label		 7				 2
 TWO              		   label		 7				 1		
 ONE              		   label		 8				 2		
 .FILL            		directive		 8				 3		
-B1111100000101010		   value		 8				 1		
+3                		   value		 8				 1		
 TWO              		   label		 9				 2		
 .FILL            		directive		 9				 4		
 34               		   value		 9				 1		
