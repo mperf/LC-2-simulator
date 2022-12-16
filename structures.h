@@ -5,7 +5,7 @@ typedef struct {
         char * token;
         char * type;
         int line_num;
-        int times;
 }symbol_table;
 
-symbol_table symtab[MAX_PAGE];
+symbol_table *symtab;
+

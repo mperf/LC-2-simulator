@@ -138,7 +138,7 @@ jump    :   jumpb ADDR {add('V'); $$.nd=mknode($1.nd,NULL,"op");}
         |   jumpb LABEL {add('L'); $$.nd=mknode($1.nd,NULL,"op");}
         ;
 
-jumpb   :   JUMP {add('J',$1.name);  $$.nd = mknode(NULL, NULL, $1.name);}
+jumpb   :   JUMP {add('J');  $$.nd = mknode(NULL, NULL, $1.name);}
         ;
 
 directive : dirb ADDR  {add('V'); $$.nd=mknode($1.nd,NULL,"op");}

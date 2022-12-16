@@ -6,8 +6,8 @@ FINE	BRNZP	FINE
 
 iONE	.fill	ONE
 iTWO	.fill	TWO
-ONE	.fill	3
-TWO	.fill	34
+ONe	.fill	b1010101010101010
+TWO	.fill	35
 COMPAR  LDR	R1,R1,#0
 	LDR	R2,R2,#0
 	LDR	R1,R1,#0

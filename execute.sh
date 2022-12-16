@@ -1,3 +1,3 @@
 #!/bin/bash
 make
-./o.out < $1
+./lc2 $1

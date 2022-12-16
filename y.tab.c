@@ -1733,7 +1733,7 @@ yyreduce:
 
   case 48:
 #line 141 "bnf.y"
-    {add('J',(yyvsp[(1) - (1)].nd_obj).name);  (yyval.nd_obj).nd = mknode(NULL, NULL, (yyvsp[(1) - (1)].nd_obj).name);}
+    {add('J');  (yyval.nd_obj).nd = mknode(NULL, NULL, (yyvsp[(1) - (1)].nd_obj).name);}
     break;
 
   case 49:

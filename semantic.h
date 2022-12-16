@@ -9,3 +9,5 @@ typedef struct labelTab_t {
 int genLibTable(symbol_table* table, labelTab *list);
 void initLabelDeclarations(symbol_table *table, labelTab *list);
 int initLabelReferences(symbol_table* table, labelTab *list);
+int codeGen(symbol_table *symtab, int count);
+int defineLen(symbol_table *symtab, int count);

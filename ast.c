@@ -19,14 +19,28 @@ void printSyntaxTree(struct node *tree){
     FILE *ftree;
     ftree=fopen("ast.txt","w");
     printInOrder(tree,ftree);
+    fclose(ftree);
+    freeTree(tree);
+    free(tree);
+}
+
+//free dell'AST
+void freeTree(struct node *tree){
+    if (tree->left && tree->right) {
+        return; 
+    }
+    freeTree(tree->right);
+    freeTree(tree->left); 
+    free(tree); 
 }
 
 void printInOrder(struct node *tree, FILE * ftree) {
-    int i;
+    
     if (tree->left) {
         printInOrder(tree->left,ftree); 
     } 
     fprintf(ftree,"%s,\n", tree->token); 
+
     if (tree->right) {  
         printInOrder(tree->right, ftree); 
     }
