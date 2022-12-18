@@ -5,9 +5,23 @@
 FINE	BRNZP	FINE
 
 iONE	.fill	ONE
-iTWO	.fill	TWO
+iTWO	.fill	TWo
 ONe	.fill	b1010101010101010
 TWO	.fill	35
+b  .fill 2
+a .blkw 1
+.stringz"  "
+.stringz" "
+g .stringz" a"
+.stringz"bbz "
+z.blkw 1
+.blkw 2
+  .blkw 5
+boh .stringz "ciao a tutti!!"
+.stringz"alak"
+.fill b1010101111111111
+ah .blkw 5
+.stringz "a"
 COMPAR  LDR	R1,R1,#0
 	LDR	R2,R2,#0
 	LDR	R1,R1,#0

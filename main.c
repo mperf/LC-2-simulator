@@ -12,6 +12,7 @@ extern int printSymtab(),genLibTable();
 
 
 int main(int argc, char const *argv[]) {
+    int count;
     if(argc == 1){
         printf("errore, passare come secondo parametro il nome del file assembly.\n");
         return 0;
@@ -31,8 +32,13 @@ int main(int argc, char const *argv[]) {
     labelTab *radix= malloc(sizeof(labelTab));
     //genero la tabella delle label e controllo errori semantici sulle label
     if(genLibTable(symtab, radix)){
-    //    return 0;
+        return 0;
     }
+    //inizializzo radice codice
+    symbol_table *code_head;
+    codeGen(symtab,radix,code_head);
+    //eseguo codice
+    
     return 0;
 
 }

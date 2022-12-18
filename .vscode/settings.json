@@ -5,6 +5,7 @@
         "proto.h": "c",
         "structures.h": "c",
         "strings.h": "c",
-        "limits": "c"
+        "limits": "c",
+        "system_error": "c"
     }
 }
