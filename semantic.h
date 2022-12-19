@@ -10,5 +10,5 @@ typedef struct labelTab_t {
 int genLibTable(symbol_table* table, labelTab *list);
 int initLabelDeclarations(symbol_table *table, labelTab *list);
 int initLabelReferences(symbol_table* table, labelTab *list);
-int codeGen(symbol_table *symtab,labelTab *list, symbol_table *code);
+symbol_table *codeGen(symbol_table *symtab,labelTab *list, symbol_table *code);
 int defineLen(symbol_table *symtab);

@@ -126,6 +126,7 @@
 
  
 #include <stdio.h>
+#include <stdlib.h>
 #include "tree.h"
 
 extern int yylex();
@@ -157,7 +158,7 @@ int countn=1,count=0,last=0,errors=0;
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 16 "bnf.y"
+#line 17 "bnf.y"
 { 
 	struct var_name { 
 		char name[100]; 
@@ -165,7 +166,7 @@ typedef union YYSTYPE
 	} nd_obj; 
 }
 /* Line 193 of yacc.c.  */
-#line 169 "y.tab.c"
+#line 170 "y.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -178,7 +179,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 182 "y.tab.c"
+#line 183 "y.tab.c"
 
 #ifdef short
 # undef short
@@ -486,13 +487,13 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    30,    30,    39,    42,    48,    48,    53,    54,    57,
-      58,    59,    60,    61,    62,    63,    64,    65,    66,    67,
-      68,    69,    70,    71,    72,    73,    74,    77,    80,    85,
-      90,    95,   102,   102,   102,   109,   109,   109,   109,   116,
-     121,   128,   128,   131,   131,   131,   137,   138,   141,   144,
-     145,   146,   147,   148,   148,   149,   149,   150,   153,   157,
-     157,   160,   163,   163,   164,   164,   164
+       0,    31,    31,    40,    43,    49,    49,    54,    55,    58,
+      59,    60,    61,    62,    63,    64,    65,    66,    67,    68,
+      69,    70,    71,    72,    73,    74,    75,    78,    81,    86,
+      91,    96,   103,   103,   103,   110,   110,   110,   110,   117,
+     122,   129,   129,   132,   132,   132,   138,   139,   142,   145,
+     146,   147,   148,   149,   149,   150,   150,   151,   154,   158,
+     158,   161,   164,   164,   165,   165,   165
 };
 #endif
 
@@ -1458,23 +1459,23 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 30 "bnf.y"
+#line 31 "bnf.y"
     {
         (yyvsp[(2) - (3)].nd_obj).nd=mknode((yyvsp[(2) - (3)].nd_obj).nd, (yyvsp[(3) - (3)].nd_obj).nd,"code"); 
         (yyval.nd_obj).nd=mknode((yyvsp[(1) - (3)].nd_obj).nd, (yyvsp[(2) - (3)].nd_obj).nd,"program"); 
-        head = (yyval.nd_obj).nd;    
-        printf("input accepted\n");
+        head = (yyval.nd_obj).nd;   
+        printf("Analysis completed...\n");
         last=1;
         }
     break;
 
   case 3:
-#line 39 "bnf.y"
+#line 40 "bnf.y"
     { (yyval.nd_obj).nd = mknode((yyvsp[(1) - (2)].nd_obj).nd, NULL, "end"); }
     break;
 
   case 4:
-#line 42 "bnf.y"
+#line 43 "bnf.y"
     {
          add('D');
          (yyval.nd_obj).nd = mknode(NULL, NULL, "endchar"); 
@@ -1482,124 +1483,124 @@ yyreduce:
     break;
 
   case 5:
-#line 48 "bnf.y"
+#line 49 "bnf.y"
     {add('D');}
     break;
 
   case 6:
-#line 48 "bnf.y"
+#line 49 "bnf.y"
     {add('V');countn++;
           (yyval.nd_obj).nd=mknode(NULL, NULL, "orig");
          }
     break;
 
   case 7:
-#line 53 "bnf.y"
+#line 54 "bnf.y"
     {countn++; (yyvsp[(1) - (1)].nd_obj).nd=mknode((yyvsp[(1) - (1)].nd_obj).nd, NULL, "line"); }
     break;
 
   case 8:
-#line 54 "bnf.y"
+#line 55 "bnf.y"
     {countn++; (yyval.nd_obj).nd=mknode((yyvsp[(1) - (2)].nd_obj).nd,(yyvsp[(2) - (2)].nd_obj).nd,"lines");}
     break;
 
   case 9:
-#line 57 "bnf.y"
+#line 58 "bnf.y"
     {(yyval.nd_obj).nd=mknode(NULL,(yyvsp[(1) - (1)].nd_obj).nd,"ldst");}
     break;
 
   case 10:
-#line 58 "bnf.y"
+#line 59 "bnf.y"
     {(yyval.nd_obj).nd=mknode(NULL,(yyvsp[(1) - (1)].nd_obj).nd,"imop");}
     break;
 
   case 11:
-#line 59 "bnf.y"
+#line 60 "bnf.y"
     {(yyval.nd_obj).nd=mknode(NULL,(yyvsp[(1) - (1)].nd_obj).nd,"bsop");}
     break;
 
   case 12:
-#line 60 "bnf.y"
+#line 61 "bnf.y"
     {(yyval.nd_obj).nd=mknode(NULL,(yyvsp[(1) - (1)].nd_obj).nd,"ret");}
     break;
 
   case 13:
-#line 61 "bnf.y"
+#line 62 "bnf.y"
     {(yyval.nd_obj).nd=mknode(NULL,(yyvsp[(1) - (1)].nd_obj).nd,"jump");}
     break;
 
   case 14:
-#line 62 "bnf.y"
+#line 63 "bnf.y"
     {(yyval.nd_obj).nd=mknode(NULL,(yyvsp[(1) - (1)].nd_obj).nd,"directive");}
     break;
 
   case 15:
-#line 63 "bnf.y"
+#line 64 "bnf.y"
     {(yyval.nd_obj).nd=mknode(NULL,(yyvsp[(1) - (1)].nd_obj).nd,"jsr");}
     break;
 
   case 16:
-#line 64 "bnf.y"
+#line 65 "bnf.y"
     {(yyval.nd_obj).nd=mknode(NULL,(yyvsp[(1) - (1)].nd_obj).nd,"not");}
     break;
 
   case 17:
-#line 65 "bnf.y"
+#line 66 "bnf.y"
     {(yyval.nd_obj).nd=mknode(NULL,(yyvsp[(1) - (1)].nd_obj).nd,"trap");}
     break;
 
   case 18:
-#line 66 "bnf.y"
+#line 67 "bnf.y"
     {(yyval.nd_obj).nd=mknode(NULL,(yyvsp[(2) - (2)].nd_obj).nd,"c-ldst");}
     break;
 
   case 19:
-#line 67 "bnf.y"
+#line 68 "bnf.y"
     {(yyval.nd_obj).nd=mknode((yyvsp[(1) - (2)].nd_obj).nd,(yyvsp[(2) - (2)].nd_obj).nd,"c-imop");}
     break;
 
   case 20:
-#line 68 "bnf.y"
+#line 69 "bnf.y"
     {(yyval.nd_obj).nd=mknode((yyvsp[(1) - (2)].nd_obj).nd,(yyvsp[(2) - (2)].nd_obj).nd,"c-bsop");}
     break;
 
   case 21:
-#line 69 "bnf.y"
+#line 70 "bnf.y"
     {(yyval.nd_obj).nd=mknode((yyvsp[(1) - (2)].nd_obj).nd,(yyvsp[(2) - (2)].nd_obj).nd,"c-ret");}
     break;
 
   case 22:
-#line 70 "bnf.y"
+#line 71 "bnf.y"
     {(yyval.nd_obj).nd=mknode((yyvsp[(1) - (2)].nd_obj).nd,(yyvsp[(2) - (2)].nd_obj).nd,"c-jump");}
     break;
 
   case 23:
-#line 71 "bnf.y"
+#line 72 "bnf.y"
     {(yyval.nd_obj).nd=mknode((yyvsp[(1) - (2)].nd_obj).nd,(yyvsp[(2) - (2)].nd_obj).nd,"c-directive");}
     break;
 
   case 24:
-#line 72 "bnf.y"
+#line 73 "bnf.y"
     {(yyval.nd_obj).nd=mknode((yyvsp[(1) - (2)].nd_obj).nd,(yyvsp[(2) - (2)].nd_obj).nd,"c-jsr");}
     break;
 
   case 25:
-#line 73 "bnf.y"
+#line 74 "bnf.y"
     {(yyval.nd_obj).nd=mknode((yyvsp[(1) - (2)].nd_obj).nd,(yyvsp[(2) - (2)].nd_obj).nd,"c-not");}
     break;
 
   case 26:
-#line 74 "bnf.y"
+#line 75 "bnf.y"
     {(yyval.nd_obj).nd=mknode((yyvsp[(1) - (2)].nd_obj).nd,(yyvsp[(2) - (2)].nd_obj).nd,"c-trap");}
     break;
 
   case 27:
-#line 77 "bnf.y"
+#line 78 "bnf.y"
     {add('L'); (yyval.nd_obj).nd=mknode(NULL,NULL,"label");}
     break;
 
   case 28:
-#line 80 "bnf.y"
+#line 81 "bnf.y"
     { 
           add('R'); 
           (yyvsp[(2) - (3)].nd_obj).nd=mknode(NULL,NULL,"operands");
@@ -1608,7 +1609,7 @@ yyreduce:
     break;
 
   case 29:
-#line 85 "bnf.y"
+#line 86 "bnf.y"
     { 
           add('V'); 
           (yyvsp[(2) - (3)].nd_obj).nd=mknode(NULL,NULL,"operands");
@@ -1617,7 +1618,7 @@ yyreduce:
     break;
 
   case 30:
-#line 90 "bnf.y"
+#line 91 "bnf.y"
     { 
           add('V'); 
           (yyvsp[(2) - (3)].nd_obj).nd=mknode(NULL,NULL,"operands");
@@ -1626,7 +1627,7 @@ yyreduce:
     break;
 
   case 31:
-#line 95 "bnf.y"
+#line 96 "bnf.y"
     { 
           add('V'); 
           (yyvsp[(2) - (3)].nd_obj).nd=mknode(NULL,NULL,"operands");
@@ -1635,17 +1636,17 @@ yyreduce:
     break;
 
   case 32:
-#line 102 "bnf.y"
+#line 103 "bnf.y"
     { add('O'); }
     break;
 
   case 33:
-#line 102 "bnf.y"
+#line 103 "bnf.y"
     { add('R'); }
     break;
 
   case 34:
-#line 102 "bnf.y"
+#line 103 "bnf.y"
     { 
           add('R'); 
           (yyval.nd_obj).nd=mknode(NULL,NULL,"op");
@@ -1653,22 +1654,22 @@ yyreduce:
     break;
 
   case 35:
-#line 109 "bnf.y"
+#line 110 "bnf.y"
     {add('O');}
     break;
 
   case 36:
-#line 109 "bnf.y"
+#line 110 "bnf.y"
     {add('R');}
     break;
 
   case 37:
-#line 109 "bnf.y"
+#line 110 "bnf.y"
     {add('R');}
     break;
 
   case 38:
-#line 109 "bnf.y"
+#line 110 "bnf.y"
     {
           add('V');
           (yyval.nd_obj).nd=mknode(NULL,NULL,"op");
@@ -1676,7 +1677,7 @@ yyreduce:
     break;
 
   case 39:
-#line 116 "bnf.y"
+#line 117 "bnf.y"
     {
           add('V');
           (yyvsp[(2) - (3)].nd_obj).nd=mknode(NULL,NULL,"operands");
@@ -1685,7 +1686,7 @@ yyreduce:
     break;
 
   case 40:
-#line 121 "bnf.y"
+#line 122 "bnf.y"
     {
           add('L');
           (yyvsp[(2) - (3)].nd_obj).nd=mknode(NULL,NULL,"operands");
@@ -1694,27 +1695,27 @@ yyreduce:
     break;
 
   case 41:
-#line 128 "bnf.y"
+#line 129 "bnf.y"
     {add('O');}
     break;
 
   case 42:
-#line 128 "bnf.y"
+#line 129 "bnf.y"
     {add('R'); (yyval.nd_obj).nd=mknode(NULL,NULL,"op");}
     break;
 
   case 43:
-#line 131 "bnf.y"
+#line 132 "bnf.y"
     {add('O');}
     break;
 
   case 44:
-#line 131 "bnf.y"
+#line 132 "bnf.y"
     {add('R');}
     break;
 
   case 45:
-#line 131 "bnf.y"
+#line 132 "bnf.y"
     {
           add('R');
           (yyval.nd_obj).nd=mknode(NULL,NULL,"op");
@@ -1722,113 +1723,113 @@ yyreduce:
     break;
 
   case 46:
-#line 137 "bnf.y"
+#line 138 "bnf.y"
     {add('V'); (yyval.nd_obj).nd=mknode((yyvsp[(1) - (2)].nd_obj).nd,NULL,"op");}
     break;
 
   case 47:
-#line 138 "bnf.y"
+#line 139 "bnf.y"
     {add('L'); (yyval.nd_obj).nd=mknode((yyvsp[(1) - (2)].nd_obj).nd,NULL,"op");}
     break;
 
   case 48:
-#line 141 "bnf.y"
+#line 142 "bnf.y"
     {add('J');  (yyval.nd_obj).nd = mknode(NULL, NULL, (yyvsp[(1) - (1)].nd_obj).name);}
     break;
 
   case 49:
-#line 144 "bnf.y"
-    {add('V'); (yyval.nd_obj).nd=mknode((yyvsp[(1) - (2)].nd_obj).nd,NULL,"op");}
-    break;
-
-  case 50:
 #line 145 "bnf.y"
     {add('V'); (yyval.nd_obj).nd=mknode((yyvsp[(1) - (2)].nd_obj).nd,NULL,"op");}
     break;
 
-  case 51:
+  case 50:
 #line 146 "bnf.y"
-    {add('V'); (yyval.nd_obj).nd=mknode((yyvsp[(1) - (2)].nd_obj).nd,NULL,"op");}
+    {add('V'); (yyval.nd_obj).nd=mknode((yyvsp[(1) - (2)].nd_obj).nd,NULL,"op");if(atoi((yyvsp[(2) - (2)].nd_obj).name)>32767){yyerror("Constraints error");}}
+    break;
+
+  case 51:
+#line 147 "bnf.y"
+    {add('V'); (yyval.nd_obj).nd=mknode((yyvsp[(1) - (2)].nd_obj).nd,NULL,"op"); int i;for(i=0;(yyvsp[(2) - (2)].nd_obj).name[i]!='\0';i++);if(i!=17){yyerror("Syntax error");}}
     break;
 
   case 52:
-#line 147 "bnf.y"
+#line 148 "bnf.y"
     {add('L'); (yyval.nd_obj).nd=mknode((yyvsp[(1) - (2)].nd_obj).nd,NULL,"op");}
     break;
 
   case 53:
-#line 148 "bnf.y"
+#line 149 "bnf.y"
     {add('D');}
     break;
 
   case 54:
-#line 148 "bnf.y"
+#line 149 "bnf.y"
     {add('V'); (yyval.nd_obj).nd=mknode(NULL,NULL,"op");}
     break;
 
   case 55:
-#line 149 "bnf.y"
+#line 150 "bnf.y"
     {add('D');}
     break;
 
   case 56:
-#line 149 "bnf.y"
+#line 150 "bnf.y"
     {add('S'); (yyval.nd_obj).nd=mknode(NULL,NULL,"op");}
     break;
 
   case 57:
-#line 150 "bnf.y"
+#line 151 "bnf.y"
     {(yyval.nd_obj).nd=mknode((yyvsp[(1) - (1)].nd_obj).nd,NULL,"op");}
     break;
 
   case 58:
-#line 153 "bnf.y"
+#line 154 "bnf.y"
     {add('D'); (yyval.nd_obj).nd = mknode(NULL, NULL, "fill");}
     break;
 
   case 59:
-#line 157 "bnf.y"
+#line 158 "bnf.y"
     {add('O');}
     break;
 
   case 60:
-#line 157 "bnf.y"
+#line 158 "bnf.y"
     {add('V'); (yyval.nd_obj).nd = mknode(NULL, NULL, "trap");}
     break;
 
   case 61:
-#line 160 "bnf.y"
+#line 161 "bnf.y"
     {add('O'); (yyval.nd_obj).nd = mknode(NULL, NULL, (yyvsp[(1) - (1)].nd_obj).name);}
     break;
 
   case 62:
-#line 163 "bnf.y"
+#line 164 "bnf.y"
     {add('O');}
     break;
 
   case 63:
-#line 163 "bnf.y"
+#line 164 "bnf.y"
     {add('L'); (yyval.nd_obj).nd = mknode(NULL, NULL, "jsr");}
     break;
 
   case 64:
-#line 164 "bnf.y"
+#line 165 "bnf.y"
     {add('O');}
     break;
 
   case 65:
-#line 164 "bnf.y"
+#line 165 "bnf.y"
     {add('R');}
     break;
 
   case 66:
-#line 164 "bnf.y"
+#line 165 "bnf.y"
     {add('V'); (yyval.nd_obj).nd = mknode(NULL, NULL, (yyvsp[(1) - (6)].nd_obj).name);}
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1832 "y.tab.c"
+#line 1833 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2042,7 +2043,7 @@ yyreturn:
 }
 
 
-#line 167 "bnf.y"
+#line 168 "bnf.y"
 
 
 

@@ -96,7 +96,7 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 16 "bnf.y"
+#line 17 "bnf.y"
 { 
 	struct var_name { 
 		char name[100]; 

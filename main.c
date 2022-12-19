@@ -8,7 +8,7 @@ extern int yyparse(),errors;
 extern symbol_table *symtab;
 extern char *yytext;
 extern FILE *yyin;
-extern int printSymtab(),genLibTable();
+extern int printSymtab(),genLibTable(),exec_code();
 
 
 int main(int argc, char const *argv[]) {
@@ -22,7 +22,10 @@ int main(int argc, char const *argv[]) {
     //richiamo il parser
     yyparse();
     if(errors){
+            printf("errors detected. exiting...\n");
             return 0;
+        }else{
+            printf("input accepted\n");
         }
     //stampo su file la tabella dei simboli
     printSymtab(symtab);
@@ -36,9 +39,10 @@ int main(int argc, char const *argv[]) {
     }
     //inizializzo radice codice
     symbol_table *code_head;
-    codeGen(symtab,radix,code_head);
+    code_head=codeGen(symtab,radix,code_head);
     //eseguo codice
-    
+    exec_code(code_head);
+
     return 0;
 
 }

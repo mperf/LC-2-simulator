@@ -2,6 +2,7 @@
 %{
  
 #include <stdio.h>
+#include <stdlib.h>
 #include "tree.h"
 
 extern int yylex();
@@ -30,8 +31,8 @@ int countn=1,count=0,last=0,errors=0;
 program :   orig lines end  {
         $2.nd=mknode($2.nd, $3.nd,"code"); 
         $$.nd=mknode($1.nd, $2.nd,"program"); 
-        head = $$.nd;    
-        printf("input accepted\n");
+        head = $$.nd;   
+        printf("Analysis completed...\n");
         last=1;
         }
         ;
@@ -142,8 +143,8 @@ jumpb   :   JUMP {add('J');  $$.nd = mknode(NULL, NULL, $1.name);}
         ;
 
 directive : dirb ADDR  {add('V'); $$.nd=mknode($1.nd,NULL,"op");}
-          | dirb NUM  {add('V'); $$.nd=mknode($1.nd,NULL,"op");}
-          | dirb BINARY  {add('V'); $$.nd=mknode($1.nd,NULL,"op");}
+          | dirb NUM  {add('V'); $$.nd=mknode($1.nd,NULL,"op");if(atoi($2.name)>32767){yyerror("Constraints error");}}
+          | dirb BINARY  {add('V'); $$.nd=mknode($1.nd,NULL,"op"); int i;for(i=0;$2.name[i]!='\0';i++);if(i!=17){yyerror("Syntax error");}}
           | dirb LABEL  {add('L'); $$.nd=mknode($1.nd,NULL,"op");}
           | BLKW {add('D');} NUM  {add('V'); $$.nd=mknode(NULL,NULL,"op");}
           | STRINGZ {add('D');} STR {add('S'); $$.nd=mknode(NULL,NULL,"op");}

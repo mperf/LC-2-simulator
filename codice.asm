@@ -6,7 +6,7 @@ FINE	BRNZP	FINE
 
 iONE	.fill	ONE
 iTWO	.fill	TWo
-ONe	.fill	b1010101010101010
+ONe	.fill	b1010101010101011
 TWO	.fill	35
 b  .fill 2
 a .blkw 1

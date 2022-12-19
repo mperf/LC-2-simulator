@@ -14,7 +14,7 @@ int genLibTable(symbol_table* table, labelTab *list){
     return 0;
 }
 
-int codeGen(symbol_table *table,labelTab *list,symbol_table *code){
+symbol_table * codeGen(symbol_table *table,labelTab *list,symbol_table *code){
     int len,i,check=0,padd=0,j=0,k=0,shift=0;
     labelTab *head=list;
     len=defineLen(symtab);
@@ -105,7 +105,7 @@ int codeGen(symbol_table *table,labelTab *list,symbol_table *code){
     /*for(i=0; i<j; i++) {
 		printf("%-17s\t\t%8s\t\t%2d\t\t\n", code[i].token_val,code[i].type, code[i].line_num);
 	}*/
-    return 0;
+    return code;
 }
 
 //aggiungo alla lunghezza le direttive di memoria
