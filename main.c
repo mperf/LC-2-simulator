@@ -9,13 +9,28 @@ extern symbol_table *symtab;
 extern char *yytext;
 extern FILE *yyin;
 extern int printSymtab(),genLibTable(),exec_code();
+extern void printHelp();
 
 
-int main(int argc, char const *argv[]) {
-    int count;
+int main(int argc, char  *argv[]) {
+    int count,options=0;
     if(argc == 1){
-        printf("errore, passare come secondo parametro il nome del file assembly.\n");
-        return 0;
+        printHelp();
+    }
+    if(argc==3){
+        if(strcmp(argv[2],"-e")==0 || strcmp(argv[2],"-E")==0){
+            printf("switch inserito: %c\n",argv[2][1]);
+            options=1;
+        }else if(strcmp(argv[2],"-s")==0 || strcmp(argv[2],"-S")==0){
+            printf("switch inserito: %c\n",argv[2][1]);
+            options=2;
+        }else{
+            printf("command error\n");
+            return 1;
+        }
+    }else if(argc!=0 && argc>3){
+        printf("command error\n");
+        return 1;
     }
     symtab=malloc(sizeof(symbol_table)*512);
     yyin=fopen(argv[1],"r");
@@ -23,7 +38,7 @@ int main(int argc, char const *argv[]) {
     yyparse();
     if(errors){
             printf("errors detected. exiting...\n");
-            return 0;
+            return 1;
         }else{
             printf("input accepted\n");
         }
@@ -41,7 +56,7 @@ int main(int argc, char const *argv[]) {
     symbol_table *code_head;
     code_head=codeGen(symtab,radix,code_head);
     //eseguo codice
-    exec_code(code_head);
+    exec_code(code_head,options);
 
     return 0;
 
