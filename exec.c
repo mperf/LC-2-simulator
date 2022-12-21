@@ -20,26 +20,82 @@ int exec_code(symbol_table *code){
     return 0;
 }*/
 #include "exec.h"
+//se facessi array di tutti i registri e li passassi a una funzione? assignToReg(LEA());
+int exec_code(symbol_table *code, int opt,short int mode){
+    short int pc=0,r0=0,r1=0,r2=0,r3=0,r4=0,r5=0,r6=0,r7=0,end=0,base=0,shift=0;
+    char cc[4], user;
 
-int exec_code(symbol_table *code, int opt){
-    short int ir=0,pc=0,r0=0,r1=0,r2=0,r3=0,r4=0,r5=0,r6=0,r7=0,end=0,base=0,shift=0;
-    char cc[4];
     base=hexToInt(code[1].token_val);
-    pc=base;
-    printInstr(pc,base,code);
+    printInstr(pc,base,code,shift);
     pc++;
     shift++;
     while(!end){
-        printInstr(pc+shift,base,code);
-        end++;
-        if(pc==base+100){
-            break;
+        printInstr(pc,base,code,shift);
+        
+        if(strcmp(code[pc+shift].type,"label")==0){
+            pc++;
         }
+        
+        if(strcmp(code[pc+shift].token_val,"BR")==0){
+
+        }else if(strcmp(code[pc+shift].token_val,"ADD")==0){
+
+        }else if(strcmp(code[pc+shift].token_val,"LD")==0){
+
+        }else if(strcmp(code[pc+shift].token_val,"ST")==0){
+
+        }else if(strcmp(code[pc+shift].token_val,"JSR")==0){
+
+        }else if(strcmp(code[pc+shift].token_val,"AND")==0){
+
+        }else if(strcmp(code[pc+shift].token_val,"LDR")==0){
+
+        }else if(strcmp(code[pc+shift].token_val,"STR")==0){
+
+        }else if(strcmp(code[pc+shift].token_val,"RTI")==0){
+
+        }else if(strcmp(code[pc+shift].token_val,"NOT")==0){
+
+        }else if(strcmp(code[pc+shift].token_val,"LDI")==0){
+
+        }else if(strcmp(code[pc+shift].token_val,"STI")==0){
+
+        }else if(strcmp(code[pc+shift].token_val,"JSRR")==0){
+
+        }else if(strcmp(code[pc+shift].token_val,"RET")==0){
+
+        }else if(strcmp(code[pc+shift].token_val,"LEA")==0){
+
+        }else if(strcmp(code[pc+shift].token_val,"TRAP")==0){
+
+        }else if(strcmp(code[pc+shift].token_val,".end")==0){
+            end=1;
+        }else{
+            printf("internal error");
+        }
+        
+        pc++,pc+=2;
+        //printf("%s",code[pc+shift].token_val);
+        printInstr(pc,base,code,shift);
+        if(opt==0){
+            printf("<LC2> ");
+            scanf("%c",&user);
+            printf("\n");
+            //...implement logic
+        }else if(opt==2){
+            sleep(1);
+            printf("TEST fine sleep\n");
+        }
+        end++;
     }
+    //print registri
 
 return 0;
 }
 
+
+
+//free symbol table
 int hexToInt(char *hex){
     //https://stackoverflow.com/questions/66358811/hex-to-int-conversion-in-c
     int i = 0,len,result = 0;
@@ -96,11 +152,12 @@ int powz(int base, int exp){
     return acc;
 }
 
-void printInstr(short int pc, short int base, symbol_table *code){
-    printf("%X\t",pc);
+void printInstr(short int pc, short int base, symbol_table *code, short int shift){
+    printf("%X\t",pc+base);
     do{
-        printf("%s\t",code[pc-base].token_val);
+        printf("%s\t",code[pc+shift].token_val);
         pc++;
-    }while(code[pc-base].line_num==code[pc-1-base].line_num);
+    }while(code[pc+shift].line_num==code[pc+shift+1].line_num);
+    printf("%s",code[pc+shift].token_val);
     printf("\n");
 }

@@ -13,16 +13,19 @@ extern void printHelp();
 
 
 int main(int argc, char  *argv[]) {
+
     int count,options=0;
     if(argc == 1){
         printHelp();
+        return 0;
     }
     if(argc==3){
         if(strcmp(argv[2],"-e")==0 || strcmp(argv[2],"-E")==0){
-            printf("switch inserito: %c\n",argv[2][1]);
+            //printf("switch inserito: %c\n",argv[2][1]);
             options=1;
         }else if(strcmp(argv[2],"-s")==0 || strcmp(argv[2],"-S")==0){
-            printf("switch inserito: %c\n",argv[2][1]);
+            //printf("switch inserito: %c\n",argv[2][1]);
+            //scegli tempo?
             options=2;
         }else{
             printf("command error\n");
@@ -56,7 +59,7 @@ int main(int argc, char  *argv[]) {
     symbol_table *code_head;
     code_head=codeGen(symtab,radix,code_head);
     //eseguo codice
-    exec_code(code_head,options);
+    exec_code(code_head,options,options);
 
     return 0;
 
