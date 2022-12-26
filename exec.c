@@ -20,84 +20,155 @@ int exec_code(symbol_table *code){
     return 0;
 }*/
 #include "exec.h"
-//se facessi array di tutti i registri e li passassi a una funzione? assignToReg(LEA());
+//JUMP SBAGLIATE,NON CONTANO LO SHIFT
+//SISTEMARE CA2 per bin
 int exec_code(symbol_table *code, int opt,short int mode){
-    short int pc=0,r0=0,r1=0,r2=0,r3=0,r4=0,r5=0,r6=0,r7=0,end=0,base=0,shift=0;
-    char cc[4], user;
-
+    short int end=0,base=0,shift=0,registers[9]={0,0,0,0,0,0,0,0,0};
+    char cc, user;
+    //r0-7 = registers[0] to [7], registers[8]= pc
     base=hexToInt(code[1].token_val);
-    printInstr(pc,base,code,shift);
-    pc++;
+    printInstr(registers[8],base,code,shift);
+    registers[8]++; 
     shift++;
     while(!end){
-        printInstr(pc,base,code,shift);
+        printInstr(registers[8],base,code,shift);
         
-        if(strcmp(code[pc+shift].type,"label")==0){
-            pc++;
+        if(strcmp(code[registers[8]+shift].type,"label")==0){
+            registers[8]++;
         }
         
-        if(strcmp(code[pc+shift].token_val,"BR")==0){
+        if(strcmp(code[registers[8]+shift].token_val,"BR")==0){
+            registers[8]=atoi(code[registers[8]+shift].token_val);
+            registers[8]++;
+            shift++;
+        }else if(strcmp(code[registers[8]+shift].token_val,"ADD")==0){
+            //shift++;
+            //printf("si\n");
+            //check if reg,hex,number,bin,
+            //shift++;
+            //printf("eh : %c",code[registers[8]+shift].token_val[0]);
+            switch(code[registers[8]+shift+3].token_val[0]){
+                case 'R':
+                    registers[regNum(code[registers[8]+shift+1].token_val[1])]=registers[regNum(code[registers[8]+shift+2].token_val[1])]+registers[regNum(code[registers[8]+shift+3].token_val[1])];
+                    break;
+                case 'X':
+                    registers[regNum(code[registers[8]+shift+1].token_val[1])]=registers[regNum(code[registers[8]+shift+2].token_val[1])]+hexToInt(code[registers[8]+shift+3].token_val);
+                    break;
+                case 'B':                     
+                    registers[regNum(code[registers[8]+shift+1].token_val[1])]=registers[regNum(code[registers[8]+shift+2].token_val[1])]+binToInt(code[registers[8]+shift+3].token_val);
+                    break;
+                case '#':
+                    registers[regNum(code[registers[8]+shift+1].token_val[1])]=registers[regNum(code[registers[8]+shift+2].token_val[1])]+numToInt(code[registers[8]+shift+3].token_val);
+            }
+            cc=checkCC(registers[regNum(code[registers[8]+shift+1].token_val[1])]);
+            shift+=3;
+        }else if(strcmp(code[registers[8]+shift].token_val,"LD")==0){
 
-        }else if(strcmp(code[pc+shift].token_val,"ADD")==0){
+        }else if(strcmp(code[registers[8]+shift].token_val,"ST")==0){
 
-        }else if(strcmp(code[pc+shift].token_val,"LD")==0){
+        }else if(strcmp(code[registers[8]+shift].token_val,"JSR")==0){
 
-        }else if(strcmp(code[pc+shift].token_val,"ST")==0){
+        }else if(strcmp(code[registers[8]+shift].token_val,"AND")==0){
 
-        }else if(strcmp(code[pc+shift].token_val,"JSR")==0){
+        }else if(strcmp(code[registers[8]+shift].token_val,"LDR")==0){
 
-        }else if(strcmp(code[pc+shift].token_val,"AND")==0){
+        }else if(strcmp(code[registers[8]+shift].token_val,"STR")==0){
 
-        }else if(strcmp(code[pc+shift].token_val,"LDR")==0){
+        }else if(strcmp(code[registers[8]+shift].token_val,"RTI")==0){
+            printf("instruction RTI not yet implemented.");
+            end=1;
+        }else if(strcmp(code[registers[8]+shift].token_val,"NOT")==0){
 
-        }else if(strcmp(code[pc+shift].token_val,"STR")==0){
+        }else if(strcmp(code[registers[8]+shift].token_val,"LDI")==0){
 
-        }else if(strcmp(code[pc+shift].token_val,"RTI")==0){
+        }else if(strcmp(code[registers[8]+shift].token_val,"STI")==0){
 
-        }else if(strcmp(code[pc+shift].token_val,"NOT")==0){
+        }else if(strcmp(code[registers[8]+shift].token_val,"JSRR")==0){
+            printf("instruction JSRR not yet implemented.");
+            end=1;
 
-        }else if(strcmp(code[pc+shift].token_val,"LDI")==0){
+        }else if(strcmp(code[registers[8]+shift].token_val,"RET")==0){
 
-        }else if(strcmp(code[pc+shift].token_val,"STI")==0){
+        }else if(strcmp(code[registers[8]+shift].token_val,"LEA")==0){
 
-        }else if(strcmp(code[pc+shift].token_val,"JSRR")==0){
+        }else if(strcmp(code[registers[8]+shift].token_val,"TRAP")==0){
+            printf("instruction TRAP not yet implemented.");
+            end=1;
 
-        }else if(strcmp(code[pc+shift].token_val,"RET")==0){
-
-        }else if(strcmp(code[pc+shift].token_val,"LEA")==0){
-
-        }else if(strcmp(code[pc+shift].token_val,"TRAP")==0){
-
-        }else if(strcmp(code[pc+shift].token_val,".end")==0){
+        }else if(strcmp(code[registers[8]+shift].token_val,".END")==0){
             end=1;
         }else{
             printf("internal error");
         }
-        
-        pc++,pc+=2;
-        //printf("%s",code[pc+shift].token_val);
-        printInstr(pc,base,code,shift);
-        if(opt==0){
-            printf("<LC2> ");
-            scanf("%c",&user);
-            printf("\n");
-            //...implement logic
-        }else if(opt==2){
-            sleep(1);
-            printf("TEST fine sleep\n");
-        }
-        end++;
-    }
-    //print registri
 
+        registers[8]++;
+
+        if(opt==0 && !end){
+            printf("> ");
+            scanf("%c",&user);
+            printf("\033[A"); //FIGATA!!!
+            if(user=='r'){
+                getchar();
+                printRegisters(registers,base,cc);
+            }else if(user>32){
+                getchar();
+            }
+        }else if(opt==2 && !end){
+            sleep(1);
+            //printf("TEST fine sleep\n");
+        }
+        //printf("ciclo\n");
+    }
+printRegisters(registers,base,cc);
 return 0;
 }
 
+void printRegisters(short int reg[],short int base,char cc){
+    printf("\n");
+    printf("R0=%d\tR1=%d\tR2=%d\tR3=%d\nR4=%d\tR5=%d\tR6=%d\tR7=%d\nCC=%c\tPC=%d (x%X)\n\n",reg[0],reg[1],reg[2],reg[3],reg[4],reg[5],reg[6],reg[7],cc,reg[8]+base-1,reg[8]+base-1);
+}
 
+char checkCC(short int result){
+    char out;
+    if(result>0){
+        out='P';
+    }else if(result<0){
+        out='N';
+    }else{
+        out='Z';
+    }
+    return out;
+}
+
+int binToInt(char *bin){
+    int i = 0,len,result = 0;
+    for(len=0;bin[len]!='\0';len++);
+    len-=2;
+    for(i=1;bin[i]!='\0';i++){
+        
+        if(bin[i]=='1'){
+            result+=powz(2,len);
+
+        }
+        len--;
+    }
+    return result;
+}
+
+int numToInt(char *num){
+    if(num[1]=='-'){
+        num[0]='-';
+        num[1]='0';
+    }else{
+        num[0]='0';
+    }
+    return atoi(num);
+}
 
 //free symbol table
+
 int hexToInt(char *hex){
-    //https://stackoverflow.com/questions/66358811/hex-to-int-conversion-in-c
+    
     int i = 0,len,result = 0;
     for(len=0;hex[len]!='\0';len++);
     len-=2;
@@ -147,7 +218,7 @@ return result;
 int powz(int base, int exp){
     int i=0,acc=1;
     for(i=0;i<exp;i++){
-        acc*=16;
+        acc*=base;
     }
     return acc;
 }
@@ -158,6 +229,47 @@ void printInstr(short int pc, short int base, symbol_table *code, short int shif
         printf("%s\t",code[pc+shift].token_val);
         pc++;
     }while(code[pc+shift].line_num==code[pc+shift+1].line_num);
-    printf("%s",code[pc+shift].token_val);
+    if(code[pc+shift].type!=0){
+        printf("%s",code[pc+shift].token_val);
+    }
     printf("\n");
+}
+
+int regNum(char reg){
+    int number;
+
+    switch(reg){
+
+        case '0':
+            number=0;
+            break;
+
+        case '1':
+            number=1;
+            break;
+
+        case '2':
+            number=2;
+            break;
+
+        case '3':
+            number=3;
+            break;
+
+        case '4':
+            number=4;
+            break;
+
+        case '5':
+            number=5;
+            break;
+
+        case '6':
+            number=6;
+            break;
+
+        case '7':
+            number=7;
+    }
+    return number;
 }

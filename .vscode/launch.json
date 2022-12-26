@@ -9,13 +9,14 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/${fileBasenameNoExtension}",
-            "args": [],
-            "stopAtEntry": false,
+            "args": ["codice.asm"],
+            "stopAtEntry": true,
             "cwd": "${fileDirname}",
             "environment": [],
             "externalConsole": false,
             "MIMode": "lldb"
         }
+
 
     ]
 }

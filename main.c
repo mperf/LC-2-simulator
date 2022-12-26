@@ -9,7 +9,7 @@ extern symbol_table *symtab;
 extern char *yytext;
 extern FILE *yyin;
 extern int printSymtab(),genLibTable(),exec_code();
-extern void printHelp();
+extern void printHelp(),freeSymTab(),freeLabelTab();
 
 
 int main(int argc, char  *argv[]) {
@@ -49,18 +49,26 @@ int main(int argc, char  *argv[]) {
     printSymtab(symtab);
     //stampo su file l'AST
     printSyntaxTree(head);
+    //inizializzo radice codice
+
+    symbol_table *code_head;
+    code_head=codeGen(symtab,code_head);
     //inizializzo radice lista tabella delle label
     labelTab *radix= malloc(sizeof(labelTab));
+    radix->name=0;
     //genero la tabella delle label e controllo errori semantici sulle label
-    if(genLibTable(symtab, radix)){
+    int i;
+    
+    if(genLibTable(code_head, radix)){
         return 0;
     }
-    //inizializzo radice codice
-    symbol_table *code_head;
-    code_head=codeGen(symtab,radix,code_head);
+    freeSymTab(symtab);
+    if(radix->name!=NULL){
+        freeLabelTab(radix);   
+    }
     //eseguo codice
     exec_code(code_head,options,options);
-
+    
     return 0;
 
 }

@@ -1,12 +1,4 @@
-
-
-		 PHASE 1: LEXICAL ANALYSIS 
-
-
-VALUE					TOKEN_TYPE   	LINE NUMBER
-_________________________________________________________________________
-
-.ORIG            		directive		 1		
+.ORIG            		        		 1		
 X3000            		   value		 1		
 ADD              		  opcode		 2		
 R0               		register		 2		
@@ -21,5 +13,3 @@ R2               		register		 4
 R1               		register		 4		
 R0               		register		 4		
 .END             		directive		 5		
-
-

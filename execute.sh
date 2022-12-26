@@ -1,3 +1,3 @@
 #!/bin/bash
 make
-./lc2 $1 $2 $3
+./main $1 $2 $3

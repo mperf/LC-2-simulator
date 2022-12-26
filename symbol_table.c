@@ -8,6 +8,8 @@ extern char *yytext;
 
 //stampo su file lista dei simboli
 void printSymtab(symbol_table* table){
+    //metto a NULL ultimo elemento per dopo
+    table[count].type=0;
     FILE *tab;
     tab=fopen("symbol.lst","w");
     fprintf(tab,"\n\n");
@@ -16,6 +18,7 @@ void printSymtab(symbol_table* table){
 	fprintf(tab,"_________________________________________________________________________\n\n");
 	int i=0;
 	for(i=0; i<count; i++) {
+                //printf("%-17s\t\t%8s\t\t%2d\t\t\n", table[i].token_val,table[i].type, table[i].line_num);
 		fprintf(tab,"%-17s\t\t%8s\t\t%2d\t\t\n", table[i].token_val,table[i].type, table[i].line_num);
 	}
 	
