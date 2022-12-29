@@ -14,7 +14,7 @@ extern void printHelp(),freeSymTab(),freeLabelTab();
 
 int main(int argc, char  *argv[]) {
 
-    int count,options=0;
+    int count,options=0,i,shift;
     if(argc == 1){
         printHelp();
         return 0;
@@ -57,7 +57,7 @@ int main(int argc, char  *argv[]) {
     labelTab *radix= malloc(sizeof(labelTab));
     radix->name=0;
     //genero la tabella delle label e controllo errori semantici sulle label
-    int i;
+    
     
     if(genLibTable(code_head, radix)){
         return 0;
@@ -68,6 +68,16 @@ int main(int argc, char  *argv[]) {
     }
     //eseguo codice
     exec_code(code_head,options,options);
+    // FILE *tab;
+    // tab=fopen("debug.txt","w");
+    // for(i=0;code_head[i].type!=NULL; i++) {
+    //     shift=0;
+	// 	do{
+    //         fprintf(tab,"%s\t",code_head[i+shift].token_val);
+    //         shift++;
+    //     }while(code_head[i+shift].line_num==code_head[i-1+shift].line_num);
+    //     fprintf(tab,"\n");
+	// }
     
     return 0;
 

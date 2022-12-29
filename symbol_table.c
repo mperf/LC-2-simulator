@@ -35,7 +35,9 @@ void yyerror(const char* msg) {
 
 //aggiungo keyword alla lista dei simboli
 void add(char type){
-        toupp(yytext);
+        if(type!='S'){
+                toupp(yytext);
+        }
         switch(type){
 
                 case 'O':
