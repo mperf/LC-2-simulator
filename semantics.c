@@ -45,12 +45,11 @@ int toAddr(symbol_table *code, labelTab *head){
 }
 
 symbol_table * codeGen(symbol_table *table,symbol_table *code){
-    FILE *tab;
-    tab=fopen("debug.txt","w");
+    // FILE *tab;
+    // tab=fopen("debug.txt","w");
 
     int len,i,padd=0,j=0,k=0,shift=0;
     len=defineLen(symtab);
-    //printf("len: %d\n",len);
     code=malloc(sizeof(symbol_table)*len);
     symbol_table *rad=code;
 
@@ -138,9 +137,9 @@ symbol_table * codeGen(symbol_table *table,symbol_table *code){
     }
     //printf("i: %d\n",i);
     code[j].type=0;
-    for(i=0; i<j; i++) {
-		fprintf(tab,"%-17s\t\t%8s\t\t%2d\t\t\n", code[i].token_val, code[i].type, code[i].line_num);
-	}
+    // for(i=0; i<j; i++) {
+	// 	fprintf(tab,"%-17s\t\t%8s\t\t%2d\t\t\n", code[i].token_val, code[i].type, code[i].line_num);
+	// }
 
     return code;
 }

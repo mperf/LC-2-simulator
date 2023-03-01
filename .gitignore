@@ -1,5 +1,9 @@
 *.out
+*.dSYM
 lex.yy.c
 lc2
 y.tab.c
 y.tab.h
+ast.txt
+debug.txt
+symbol.lst
