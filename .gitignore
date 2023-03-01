@@ -1,1 +1,5 @@
 *.out
+lex.yy.c
+lc2
+y.tab.c
+y.tab.h

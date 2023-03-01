@@ -1,27 +1,6 @@
-//fetch decode exec wb PRINT
-//pc, cc, ir, r0-7
-//ca2 numbers
-// e se l'user è stupido e mi fa eseguire delle .FILL o blkw?
-/*
-funzioni ausiliarie:
-toCa2();
-jumpConditionCheck();
-to base16();
-getOpcode();
-
-int exec_code(symbol_table *code){
-    int ir,pc,cc,r0-7
-    while(istruzione non è la stessa per n volte)
-        fetch(code);
-        decode();
-        exec();
-        wb();
-        printCommand();
-    return 0;
-}*/
 #include "exec.h"
 
-//NESTED JSR up to 10 (for now)
+
 int exec_code(symbol_table *code, int opt,short int mode){
     short int end=0,base=0,flag=0,temp=0,shift=0,lea=0,lsreg=0,retShift[10],retidx=0,registers[9]={0,0,0,0,0,0,0,0,0},len,i;
     char cc, user;
@@ -435,7 +414,7 @@ int exec_code(symbol_table *code, int opt,short int mode){
                 temp++;
             }
             
-            printf("tipo: %s, l: %d\n\n",code[temp].type,registers[regNum(code[registers[8]+shift+2].token_val[1])]+numToInt(code[registers[8]+shift+3].token_val)-base+1);
+            //printf("tipo: %s, l: %d\n\n",code[temp].type,registers[regNum(code[registers[8]+shift+2].token_val[1])]+numToInt(code[registers[8]+shift+3].token_val)-base+1);
             
 
             if(strcmp(code[temp].type,".stringz")==0){
@@ -690,6 +669,7 @@ void toCa2(short one, char *first){
 
 //ca2 binary
 int binToInt(char *bin){
+
     int i = 0,len,result = 0,n=0;
     for(len=0;bin[len]!='\0';len++);
     len-=2;
