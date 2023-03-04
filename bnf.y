@@ -6,6 +6,7 @@
 #include "tree.h"
 
 extern int yylex();
+extern struct node *head;
 extern int yywrap();
 extern void add(),yyerror();
 

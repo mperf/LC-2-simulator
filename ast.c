@@ -1,5 +1,9 @@
 #include <stdio.h>
-#include <strings.h>
+#if __linux__
+    #include <string.h>
+#else
+    #include <strings.h>
+#endif
 #include <stdlib.h>
 #include "tree.h"
 

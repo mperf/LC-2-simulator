@@ -1,10 +1,15 @@
 #include <stdio.h>
-#include <strings.h>
+#if __linux__
+    #include <string.h>
+#else
+    #include <strings.h>
+#endif
 #include "structures.h"
 #include "symtab.h"
 
 extern int count,countline,last,errors,countn;
 extern char *yytext;
+extern symbol_table *symtab;
 
 //stampo su file lista dei simboli
 void printSymtab(symbol_table* table){

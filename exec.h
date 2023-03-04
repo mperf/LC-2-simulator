@@ -1,7 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <strings.h>
+#if __linux__
+    #include <string.h>
+#else
+    #include <strings.h>
+#endif
 #include "structures.h"
 
 int exec_code(symbol_table *code, int opt,short int mode);

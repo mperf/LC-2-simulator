@@ -1,15 +1,21 @@
 #include <stdio.h>
-#include <strings.h>
+#if __linux__
+    #include <string.h>
+#else
+    #include <strings.h>
+#endif
 #include <stdlib.h>
 #include "tree.h"
 #include "semantic.h"
 
 extern int yyparse(),errors;
-extern symbol_table *symtab;
+//extern symbol_table *symtab;
+symbol_table *symtab;
 extern char *yytext;
 extern FILE *yyin;
 extern int printSymtab(),genLibTable(),exec_code();
 extern void printHelp(),freeSymTab(),freeLabelTab();
+struct node *head;
 
 
 int main(int argc, char  *argv[]) {

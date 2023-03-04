@@ -6,5 +6,5 @@ typedef struct {
         int line_num;
 }symbol_table;
 
-symbol_table *symtab;
+
 

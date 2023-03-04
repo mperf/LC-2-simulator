@@ -1,7 +1,13 @@
 #include <stdio.h>
-#include <strings.h>
+#if __linux__
+    #include <string.h>
+#else
+    #include <strings.h>
+#endif
 #include "semantic.h"
 #include <stdlib.h>
+
+extern symbol_table *symtab;
 
 //genero tabella label e controllo semantica
 int genLibTable(symbol_table* table, labelTab *list){
