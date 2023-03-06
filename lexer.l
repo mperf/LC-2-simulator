@@ -3,42 +3,43 @@
 int countline=1;
 #include "y.tab.h"
 #include "tree.h"
+#define TABLE strcpy(yylval.nd_obj.name,(yytext));
 %}
 
 %option yylineno
 
 %%
 
-(?i:"RET"|"RTI")                                {strcpy(yylval.nd_obj.name,(yytext)); return RETS;} 
-(?i:"LD"|"LDI"|"LEA"|"ST"|"STI")                {strcpy(yylval.nd_obj.name,(yytext)); return LDST;}
-(?i:"NOT")                                      {strcpy(yylval.nd_obj.name,(yytext));  return NOT;}
-(?i:"ADD"|"AND")                                {strcpy(yylval.nd_obj.name,(yytext));  return IMOP;}
-(?i:"LDR"|"STR")                                {strcpy(yylval.nd_obj.name,(yytext));  return BSOP;}
-(?i:"TRAP")                                     {strcpy(yylval.nd_obj.name,(yytext));  return TRAP;}
-(?i:"r")[0-7]                                   {strcpy(yylval.nd_obj.name,(yytext));  return REGISTER;}
-(?i:"br")(?i:"z"|"n"|"p")                       {strcpy(yylval.nd_obj.name,(yytext));  return JUMP;}
-(?i:"brn")(?i:"z"|"p")                          {strcpy(yylval.nd_obj.name,(yytext));  return JUMP;}
-(?i:"brzp")                                     {strcpy(yylval.nd_obj.name,(yytext));  return JUMP;}
-(?i:"brnzp")                                    {strcpy(yylval.nd_obj.name,(yytext));  return JUMP;}
-(?I:"JSR")                                      {strcpy(yylval.nd_obj.name,(yytext));  return JSR;}
-(?I:"JSRR")                                     {strcpy(yylval.nd_obj.name,(yytext));  return JSRR;}
-"."(?i:"orig")                                  {strcpy(yylval.nd_obj.name,(yytext));  return ORIG;}
-"."(?i:"end")                                   {strcpy(yylval.nd_obj.name,(yytext));  return END;}
-"."(?i:"blkw")                                  {strcpy(yylval.nd_obj.name,(yytext));  return BLKW;}
-"."(?i:"fill")                                  {strcpy(yylval.nd_obj.name,(yytext));  return FILL;}
-"."(?i:"stringz")                               {strcpy(yylval.nd_obj.name,(yytext));  return STRINGZ;}
-(?i:"b")[0-1]{16}                               {strcpy(yylval.nd_obj.name,(yytext));  return BINARY;}
-"x"[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F] {strcpy(yylval.nd_obj.name,(yytext));  return ADDR;}
+(?i:"RET"|"RTI")                                {TABLE return RETS;} 
+(?i:"LD"|"LDI"|"LEA"|"ST"|"STI")                {TABLE return LDST;}
+(?i:"NOT")                                      {TABLE  return NOT;}
+(?i:"ADD"|"AND")                                {TABLE  return IMOP;}
+(?i:"LDR"|"STR")                                {TABLE  return BSOP;}
+(?i:"TRAP")                                     {TABLE  return TRAP;}
+(?i:"r")[0-7]                                   {TABLE  return REGISTER;}
+(?i:"br")(?i:"z"|"n"|"p")                       {TABLE  return JUMP;}
+(?i:"brn")(?i:"z"|"p")                          {TABLE  return JUMP;}
+(?i:"brzp")                                     {TABLE  return JUMP;}
+(?i:"brnzp")                                    {TABLE  return JUMP;}
+(?I:"JSR")                                      {TABLE  return JSR;}
+(?I:"JSRR")                                     {TABLE  return JSRR;}
+"."(?i:"orig")                                  {TABLE  return ORIG;}
+"."(?i:"end")                                   {TABLE  return END;}
+"."(?i:"blkw")                                  {TABLE  return BLKW;}
+"."(?i:"fill")                                  {TABLE  return FILL;}
+"."(?i:"stringz")                               {TABLE  return STRINGZ;}
+(?i:"b")[0-1]{16}                               {TABLE  return BINARY;}
+"x"[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F] {TABLE  return ADDR;}
 ";".*                                           { ; }
 [ \t]*                                          { ; }
 [\n]                                            countline++;
-"#"[-]?[0-9]                                    {strcpy(yylval.nd_obj.name,(yytext));  return NUMBERS;}
-"#"[-]?[1][0-5]                                 {strcpy(yylval.nd_obj.name,(yytext));  return NUMBERS;}
-[-]?[0-9]*                                      {strcpy(yylval.nd_obj.name,(yytext));  return NUM;}
-[a-zA-Z_][a-zA-Z0-9_]*                          {strcpy(yylval.nd_obj.name,(yytext));  return LABEL;}
-["].*["]                                        {strcpy(yylval.nd_obj.name,(yytext));  return STR;} 
-","                                             {strcpy(yylval.nd_obj.name,(yytext));  return COMMA;}
-<<EOF>>                                         {strcpy(yylval.nd_obj.name,(yytext));  return EOFF;}
+"#"[-]?[0-9]                                    {TABLE  return NUMBERS;}
+"#"[-]?[1][0-5]                                 {TABLE  return NUMBERS;}
+[-]?[0-9]*                                      {TABLE  return NUM;}
+[a-zA-Z_][a-zA-Z0-9_]*                          {TABLE  return LABEL;}
+["].*["]                                        {TABLE  return STR;} 
+","                                             {TABLE  return COMMA;}
+<<EOF>>                                         {TABLE  return EOFF;}
 .                                               { ; }
 
 
