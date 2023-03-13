@@ -31,7 +31,6 @@ int main(int argc, char  *argv[]) {
             options=1;
         }else if(strcmp(argv[2],"-s")==0 || strcmp(argv[2],"-S")==0){
             //printf("switch inserito: %c\n",argv[2][1]);
-            //scegli tempo?
             options=2;
         }else{
             printf("command error\n");
@@ -74,22 +73,8 @@ int main(int argc, char  *argv[]) {
     }
     //eseguo codice
     exec_code(code_head,options,options);
-    // FILE *tab;
-    // tab=fopen("debug.txt","w");
-    // for(i=0;code_head[i].type!=NULL; i++) {
-    //     shift=0;
-	// 	do{
-    //         fprintf(tab,"%s\t",code_head[i+shift].token_val);
-    //         shift++;
-    //     }while(code_head[i+shift].line_num==code_head[i-1+shift].line_num);
-    //     fprintf(tab,"\n");
-	// }
-    
     return 0;
 
 }
-
-
-//showinstruction()
 
 

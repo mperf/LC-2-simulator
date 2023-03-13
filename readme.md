@@ -21,3 +21,27 @@ sudo apt install bison
 
 ## Usage
 `./lc2 code.asm [-e]|[-s]`
+
+- -e: executes the entire program and prints all registers
+- -s: steps to every instruction in ~=1000 ms
+- no options: press enter for next instruction
+  
+### during execution without options
+
+press `r` to print the registers:
+
+```
+  x3001   AND     R2      R2      #0
+x3002   CICLO   LDR     R1      R0      #0
+x3003   BRZ     FINE
+> r
+R0=12297        R1=15   R2=0    R3=0
+R4=0    R5=0    R6=0    R7=0
+CC=P    PC=12291 (x3003)
+
+> 
+```
+
+## Missing parts
+
+TRAP instructions are not yet implemented. LOAD & STORE functions work perfectly, You just can't see them in the memory.

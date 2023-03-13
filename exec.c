@@ -464,41 +464,7 @@ int exec_code(symbol_table *code, int opt,short int mode){
                 cc='Z';
             }
 
-            // if(strcmp(code[registers[regNum(code[PC+shift+2].token_val[1])]+numToInt(code[PC+shift+3].token_val)-base].type,".stringz")==0){
-            //     registers[regNum(code[PC+shift+1].token_val[1])] = code[registers[regNum(code[PC+shift+2].token_val[1])]+numToInt(code[PC+shift+3].token_val)-base].token_val[0];
 
-            // }else if(strcmp(code[registers[regNum(code[PC+shift+2].token_val[1])]+numToInt(code[PC+shift+3].token_val)-base].type,".blkw")==0){
-
-            //     if(code[registers[regNum(code[PC+shift+2].token_val[1])]+numToInt(code[PC+shift+3].token_val)-base].token_val==NULL){
-            //         registers[regNum(code[PC+shift+1].token_val[1])]=0;
-            //         //printf("LDR err\n\n");
-            //     }else{
-            //         //printf("\n\naaa: %d\n\n",atoi(code[registers[regNum(code[PC+shift+2].token_val[1])]+numToInt(code[PC+shift+3].token_val)-base].token_val));
-            //         registers[regNum(code[PC+shift+1].token_val[1])]=atoi(code[registers[regNum(code[PC+shift+2].token_val[1])]+numToInt(code[PC+shift+3].token_val)-base].token_val);
-            //     }
-
-            // }else if(strcmp(code[registers[regNum(code[PC+shift+2].token_val[1])]+numToInt(code[PC+shift+3].token_val)-base].token_val,".FILL")==0){
-
-            //     switch(code[registers[regNum(code[PC+shift+2].token_val[1])]+numToInt(code[PC+shift+3].token_val)-base+1].token_val[0]){
-            //         case 'X':
-            //             registers[regNum(code[PC+shift+1].token_val[1])]=hexToInt(code[registers[regNum(code[PC+shift+2].token_val[1])]+numToInt(code[PC+shift+3].token_val)-base+1].token_val);
-            //             break;
-            //         case 'B':
-            //             registers[regNum(code[PC+shift+1].token_val[1])]=binToInt(code[registers[regNum(code[PC+shift+2].token_val[1])]+numToInt(code[PC+shift+3].token_val)-base+1].token_val);
-            //             break;
-            //         default:
-            //         if(atoi(code[registers[regNum(code[PC+shift+2].token_val[1])]+numToInt(code[PC+shift+3].token_val)-base+1].token_val)>32767){
-            //             registers[regNum(code[PC+shift+1].token_val[1])]=0;
-            //             printf("LDR err\n\n");
-            //         }else{
-            //             //printf("trovato: %d\n\n",atoi(code[registers[regNum(code[PC+shift+2].token_val[1])]+numToInt(code[PC+shift+3].token_val)-base+1].token_val));
-            //             registers[regNum(code[PC+shift+1].token_val[1])]=atoi(code[registers[regNum(code[PC+shift+2].token_val[1])]+numToInt(code[PC+shift+3].token_val)-base+1].token_val);
-            //         }
-            //     }
-
-            // }else{
-            //     printf("LDR error\n\n");
-            // }
             shift+=3,flag=0,len=0,temp=0;
 
 
