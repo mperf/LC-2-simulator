@@ -20,7 +20,7 @@ sudo apt install bison
 3. launch the `make` command
 
 ## Usage
-`./lc2 code.asm [-e]|[-s]`
+`./lc2 example.asm [-e]|[-s]`
 
 - -e: executes the entire program and prints all registers
 - -s: steps to every instruction in ~=1000 ms
