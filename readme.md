@@ -31,7 +31,7 @@ sudo apt install bison
 press `r` to print the registers:
 
 ```
-  x3001   AND     R2      R2      #0
+x3001   AND     R2      R2      #0
 x3002   LOOP   LDR     R1      R0      #0
 x3003   BRZ     END
 > r
