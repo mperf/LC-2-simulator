@@ -147,7 +147,10 @@ int exec_code(symbol_table *code, int opt,short int mode){
                                         //printf("siii\n\n\n");
                                         if(flag){
                                             
-                                            realloc(code[PC+shift+1].token_val, sizeof(char)*6);
+                                            if(realloc(code[PC+shift+1].token_val, sizeof(char)*6)==NULL){
+                                                printf("memory error");
+                                                end=1;
+                                            }
                                             sprintf(code[PC+shift+1].token_val,"%c",(registers[regNum(code[PC+temp+1].token_val[1])]));
                                             //printf("salvato: %s\n\n",code[PC+shift+1].token_val);
                                         }else if(lea){
@@ -239,7 +242,10 @@ int exec_code(symbol_table *code, int opt,short int mode){
                                         //printf("siii\n\n\n");
                                         if(flag){
                                             
-                                            realloc(code[PC+shift+1].token_val, sizeof(char)*6);
+                                            if(realloc(code[PC+shift+1].token_val, sizeof(char)*6)==NULL){
+                                                printf("memory error");
+                                                end=1;
+                                            }
                                             sprintf(code[PC+shift+1].token_val,"%c",(registers[regNum(code[PC+temp+1].token_val[1])]));
                                             //printf("salvato: %s\n\n",code[PC+shift+1].token_val);
                                         }else if(lea){
@@ -512,7 +518,11 @@ int exec_code(symbol_table *code, int opt,short int mode){
            //printf("stuff: %d\n\n",registers[regNum(code[PC+shift+2].token_val[1])]-base+numToInt(code[PC+shift+3].token_val));
             if(strcmp(code[temp].type,".stringz")==0){
                 //registers[regNum(code[PC+shift+1].token_val[1])] = [0];
-                realloc(code[temp].token_val,sizeof(char)*2);
+                if(realloc(code[temp].token_val,sizeof(char)*2)==NULL){
+                    printf("memory error");
+                    end=1;
+                }
+                
                 sprintf(code[temp].token_val,"%c",registers[regNum(code[PC+shift+1].token_val[1])]);
                 printf("messo: %s\n\n",code[temp].token_val);
                 cc=checkCC(atoi(code[temp+1].token_val));
@@ -521,13 +531,21 @@ int exec_code(symbol_table *code, int opt,short int mode){
                 }
             }else if(strcmp(code[temp].type,".blkw")==0){
 
-                realloc(code[temp].token_val,sizeof(char)*6);
+                
+                if(realloc(code[temp].token_val,sizeof(char)*6)==NULL){
+                    printf("memory error");
+                    end=1;
+                }
                 sprintf(code[temp].token_val,"%d",registers[regNum(code[PC+shift+1].token_val[1])]);
                  printf("messob: %s\n\n",code[temp].token_val);
                 cc=checkCC(atoi(code[temp+1].token_val));
             }else if(strcmp(code[temp].token_val,".FILL")==0){
             
-                realloc(code[temp+1].token_val,sizeof(char)*6);
+                
+                if(realloc(code[temp+1].token_val,sizeof(char)*6)==NULL){
+                    printf("memory error");
+                    end=1;
+                }
                 sprintf(code[temp+1].token_val,"%d",registers[regNum(code[PC+shift+1].token_val[1])]);
                  printf("messof: %s\n\n",code[temp].token_val);
                 cc=checkCC(atoi(code[temp+1].token_val));

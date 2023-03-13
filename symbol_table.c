@@ -18,7 +18,7 @@ void printSymtab(symbol_table* table){
     FILE *tab;
     tab=fopen("symbol.lst","w");
     fprintf(tab,"\n\n");
-	fprintf(tab,"\t\t PHASE 1: LEXICAL ANALYSIS \n\n");
+	fprintf(tab,"\t\t\t SYMBOL TABLE \n\n");
 	fprintf(tab,"\nVALUE\t\t\t\t\tTOKEN_TYPE   \tLINE NUMBER\n");
 	fprintf(tab,"_________________________________________________________________________\n\n");
 	int i=0;

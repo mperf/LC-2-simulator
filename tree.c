@@ -21,7 +21,7 @@ struct node* mknode(struct node *left, struct node *right, char *token) {
 //stampo su file albero
 void printSyntaxTree(struct node *tree){
     FILE *ftree;
-    ftree=fopen("ast.txt","w");
+    ftree=fopen("tree.txt","w");
     printInOrder(tree,ftree);
     fclose(ftree);
     freeTree(tree);

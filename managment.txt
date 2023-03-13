@@ -4,4 +4,4 @@
 tree.h  semantic.h  symtab.h
    |        |           |
    |        |           |
- ast.c  semantics.c symbol_table.c
+ tree.c  semantics.c symbol_table.c
