@@ -32,8 +32,8 @@ press `r` to print the registers:
 
 ```
   x3001   AND     R2      R2      #0
-x3002   CICLO   LDR     R1      R0      #0
-x3003   BRZ     FINE
+x3002   LOOP   LDR     R1      R0      #0
+x3003   BRZ     END
 > r
 R0=12297        R1=15   R2=0    R3=0
 R4=0    R5=0    R6=0    R7=0

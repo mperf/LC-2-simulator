@@ -1,4 +1,3 @@
-	AND R5,R5,#0
 	.orig	x3000
 	lea	r0,array	;carica in R0 puntatore ad array
 	and	r2,r2,#0	;azzera totalizzatore
