@@ -44,4 +44,4 @@ CC=P    PC=12291 (x3003)
 
 ## Missing parts
 
-TRAP instructions are not yet implemented. LOAD & STORE functions work perfectly, You just can't see them in the memory.
+TRAP instructions are not yet implemented. LOAD & STORE functions work perfectly, You just can't see them in the memory during execution.
