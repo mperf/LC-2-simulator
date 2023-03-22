@@ -14,8 +14,15 @@ https://mattiaperfumo.it/compiler-design/
 1. First, You need to install Flex (lexical analyzer) and Yacc. Use brew if You are in MacOS.
    
 ```C
+# for Linux
 sudo apt install flex \
 sudo apt install bison
+
+# for MacOS
+
+sudo brew install flex \
+sudo brew install bison
+
 ```
 
 2. clone this repo
