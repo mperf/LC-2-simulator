@@ -2,6 +2,8 @@
 
 Assembly LC-2 cli simulator written in C, Lex and Yacc.
 
+https://mattiaperfumo.it/compiler-design/
+
 ## Compatibility
 
 - Linux
